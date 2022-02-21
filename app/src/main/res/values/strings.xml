@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GeoQuiz</string>
+    <string name="app_name">ComradeFinder</string>
     <string name="login_text">Login</string>
     <string name="true_button">True</string>
     <string name="false_button">False</string>
