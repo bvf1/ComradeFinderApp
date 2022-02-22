@@ -22,44 +22,44 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/titleLabel"
+            android:id="@+id/title_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/titleLabel" />
+            android:text="@string/title_label" />
 
         <EditText
-            android:id="@+id/titleEntry"
+            android:id="@+id/title_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/titleLabel"
+            android:hint="@string/title_label"
             android:importantForAutofill="no"
             android:inputType="text"
             android:minHeight="48dp"
             tools:ignore="DuplicateSpeakableTextCheck" />
 
         <TextView
-            android:id="@+id/priceRangeLabel"
+            android:id="@+id/priceRange_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/priceRangeLabel" />
+            android:text="@string/priceRange_label" />
 
         <NumberPicker
-            android:id="@+id/priceRangeEntry"
+            android:id="@+id/priceRange_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:importantForAutofill="no" />
 
         <TextView
-            android:id="@+id/descriptionLabel"
+            android:id="@+id/description_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/descriptionLabel" />
+            android:text="@string/description_label" />
 
         <EditText
-            android:id="@+id/descriptionEntry"
+            android:id="@+id/description_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/descriptionLabel"
+            android:hint="@string/description_label"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:minHeight="100dp"
@@ -67,10 +67,10 @@
             tools:ignore="DuplicateSpeakableTextCheck" />
 
         <Button
-            android:id="@+id/registerAd"
+            android:id="@+id/registerAd_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/registerAd" />
+            android:text="@string/registerAd_button" />
 
 
     </LinearLayout>

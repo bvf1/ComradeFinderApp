@@ -9,15 +9,15 @@
     <string name="false_toast">Wrong Answer</string>
     <string name="correct_toast">Correct</string>
     <string name="makeAd_headline">Make an Advertisement</string>
-    <string name="titleLabel">Title</string>
-    <string name="priceRangeLabel">Price Range</string>
-    <string name="descriptionLabel">Description</string>
-    <string name="registerAd">Register Ad</string>
+    <string name="title_label">Title</string>
+    <string name="priceRange_label">Price Range</string>
+    <string name="description_label">Description</string>
     <string name="makeAdvert_headline">Job Application</string>
-    <string name="nameLabel">Name</string>
-    <string name="emailLabel">Email</string>
-    <string name="positionLabel">Position you are applying for</string>
-    <string name="phoneLabel">Phone Number</string>
-    <string name="lastCompanyLabel">Síðasta fyrirtæki sem þú vannst hjá</string>
-    <string name="adExtraLabel">References / Comments / Questions</string>
+    <string name="name_label">Name</string>
+    <string name="email_label">Email</string>
+    <string name="position_label">Position you are applying for</string>
+    <string name="phone_label">Phone Number</string>
+    <string name="lastCompany_label">Síðasta fyrirtæki sem þú vannst hjá</string>
+    <string name="adExtra_label">References / Comments / Questions</string>
+    <string name="registerAd_button">Register Ad</string>
 </resources>

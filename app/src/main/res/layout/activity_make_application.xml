@@ -23,16 +23,16 @@
 
 
         <TextView
-            android:id="@+id/nameLabel"
+            android:id="@+id/name_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/nameLabel" />
+            android:text="@string/name_label" />
 
         <EditText
-            android:id="@+id/nameEntry"
+            android:id="@+id/name_Entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/nameLabel"
+            android:hint="@string/name_label"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:minHeight="48dp"
@@ -40,40 +40,40 @@
 
 
         <TextView
-            android:id="@+id/emailLabel"
+            android:id="@+id/email_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/emailLabel" />
+            android:text="@string/email_label" />
 
         <EditText
-            android:id="@+id/emailEntry"
+            android:id="@+id/email_Entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="@string/emailLabel"
+            android:hint="@string/email_label"
             android:importantForAutofill="no" />
 
         <TextView
-            android:id="@+id/phoneLabel"
+            android:id="@+id/phone_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/phoneLabel"/>
+            android:text="@string/phone_label"/>
 
         <EditText
-            android:id="@+id/phoneEntry"
+            android:id="@+id/phone_Entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
             android:autofillHints="phone Number" />
 
         <TextView
-            android:id="@+id/positionLabel"
+            android:id="@+id/position_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/positionLabel" />
+            android:text="@string/position_label" />
 
         <EditText
-            android:id="@+id/positionEntry"
+            android:id="@+id/position_Entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="#78909C"
@@ -82,13 +82,13 @@
             android:inputType="text" />
 
         <TextView
-            android:id="@+id/lastCompanyLabel"
+            android:id="@+id/lastCompany_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lastCompanyLabel" />
+            android:text="@string/lastCompany_label" />
 
         <EditText
-            android:id="@+id/lastCompanyEntry"
+            android:id="@+id/lastCompany_Entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="#78909C"
@@ -97,13 +97,13 @@
             android:inputType="text" />
 
         <TextView
-            android:id="@+id/adExtraLabel"
+            android:id="@+id/adExtra_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/adExtraLabel" />
+            android:text="@string/adExtra_label" />
 
         <EditText
-            android:id="@+id/adExtraEntry"
+            android:id="@+id/adExtra_Entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="#78909C"
@@ -116,7 +116,7 @@
             android:id="@+id/registerAd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/registerAd" />
+            android:text="@string/registerAd_button" />
 
 
     </LinearLayout>
