@@ -12,7 +12,7 @@
     <string name="title_label">Title</string>
     <string name="priceRange_label">Price Range</string>
     <string name="description_label">Description</string>
-    <string name="makeAdvert_headline">Job Application</string>
+    <string name="makeApplication_headline">Job Application</string>
     <string name="name_label">Name</string>
     <string name="email_label">Email</string>
     <string name="position_label">Position you are applying for</string>
@@ -24,4 +24,5 @@
     <string name="login_button_text">Login</string>
     <string name="userame_text_input">Userame</string>
     <string name="password_text_input">Password</string>
+    <string name="registerApp_button">Register Application</string>
 </resources>

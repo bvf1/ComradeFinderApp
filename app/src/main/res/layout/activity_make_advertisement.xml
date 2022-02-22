@@ -43,11 +43,10 @@
             android:layout_height="wrap_content"
             android:text="@string/priceRange_label" />
 
-        <NumberPicker
+        <com.google.android.material.slider.RangeSlider
             android:id="@+id/priceRange_entry"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:importantForAutofill="no" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/description_label"

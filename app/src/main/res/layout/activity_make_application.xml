@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:text="@string/makeAdvert_headline" />
+        android:text="@string/makeApplication_headline" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -113,10 +113,10 @@
 
 
         <Button
-            android:id="@+id/registerAd"
+            android:id="@+id/registerApp_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/registerAd_button" />
+            android:text="@string/registerApp_button" />
 
 
     </LinearLayout>
