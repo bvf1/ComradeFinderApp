@@ -3,8 +3,21 @@
     <string name="question_text">
         Akureyri is the largest city in Iceland
     </string>
+
     <string name="true_button">True</string>
     <string name="false_button">False</string>
     <string name="false_toast">Wrong Answer</string>
     <string name="correct_toast">Correct</string>
+    <string name="makeAd_headline">Make an Advertisement</string>
+    <string name="titleLabel">Title</string>
+    <string name="priceRangeLabel">Price Range</string>
+    <string name="descriptionLabel">Description</string>
+    <string name="registerAd">Register Ad</string>
+    <string name="makeAdvert_headline">Job Application</string>
+    <string name="nameLabel">Name</string>
+    <string name="emailLabel">Email</string>
+    <string name="positionLabel">Position you are applying for</string>
+    <string name="phoneLabel">Phone Number</string>
+    <string name="lastCompanyLabel">Síðasta fyrirtæki sem þú vannst hjá</string>
+    <string name="adExtraLabel">References / Comments / Questions</string>
 </resources>
