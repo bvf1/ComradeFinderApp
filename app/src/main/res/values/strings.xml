@@ -20,4 +20,8 @@
     <string name="lastCompany_label">Síðasta fyrirtæki sem þú vannst hjá</string>
     <string name="adExtra_label">References / Comments / Questions</string>
     <string name="registerAd_button">Register Ad</string>
+    <string name="login_text">Login</string>
+    <string name="login_button_text">Login</string>
+    <string name="userame_text_input">Userame</string>
+    <string name="password_text_input">Password</string>
 </resources>
