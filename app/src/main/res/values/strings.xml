@@ -25,4 +25,6 @@
     <string name="userame_text_input">Userame</string>
     <string name="password_text_input">Password</string>
     <string name="registerApp_button">Register Application</string>
+    <string name="extraQuestions">Extra Questions You Want To Add</string>
+    <string name="adQuestion_button">Add</string>
 </resources>
