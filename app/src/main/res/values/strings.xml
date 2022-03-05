@@ -1,13 +1,16 @@
 <resources>
     <string name="app_name">ComradeFinder</string>
-    <string name="question_text">
-        Akureyri is the largest city in Iceland
-    </string>
 
-    <string name="true_button">True</string>
-    <string name="false_button">False</string>
-    <string name="false_toast">Wrong Answer</string>
-    <string name="correct_toast">Correct</string>
+    <!-- Please try to keep this tidy and clean -->
+
+    <!--Single words/labels-->
+    <!--user login/registration-->
+    <string name="login_text">Login</string>
+    <string name="register_text">Register</string>
+    <string name="username_text_input">Username</string>
+    <string name="password_text_input">Password</string>
+
+
     <string name="makeAd_headline">Make an Advertisement</string>
     <string name="title_label">Title</string>
     <string name="priceRange_label">Price Range</string>
@@ -20,10 +23,6 @@
     <string name="lastCompany_label">Síðasta fyrirtæki sem þú vannst hjá</string>
     <string name="adExtra_label">References / Comments / Questions</string>
     <string name="registerAd_button">Register Ad</string>
-    <string name="login_text">Login</string>
-    <string name="login_button_text">Login</string>
-    <string name="userame_text_input">Userame</string>
-    <string name="password_text_input">Password</string>
     <string name="registerApp_button">Register Application</string>
     <string name="extraQuestions">Extra Questions You Want To Add</string>
     <string name="adQuestion_button">Add</string>

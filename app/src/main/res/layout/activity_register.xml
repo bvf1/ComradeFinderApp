@@ -6,41 +6,50 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
     <TextView
-        android:id="@+id/loginText"
+        android:id="@+id/registerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="24dp"
+        android:text="@string/register_text"
         android:textSize="25sp"
-        android:text="@string/login_text" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="123dp"
+        tools:layout_editor_absoluteY="147dp" />
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/editTextRegisterUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/username_text_input"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:padding="24dp"
-        android:hint="@string/username_text_input" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="241dp" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/password_text_input"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:padding="24dp"
-        android:hint="@string/password_text_input"/>
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="329dp" />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/register_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="24dp"
-        android:text="@string/login_text" />
+        android:text="@string/register_text"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="434dp" />
 
 </LinearLayout>
