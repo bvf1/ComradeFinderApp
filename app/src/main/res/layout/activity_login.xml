@@ -24,7 +24,8 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:padding="24dp"
-        android:hint="@string/username_text_input" />
+        android:hint="@string/username_text"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -34,7 +35,8 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:padding="24dp"
-        android:hint="@string/password_text_input"/>
+        android:hint="@string/password_text"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/login_button"

@@ -7,8 +7,10 @@
     <!--user login/registration-->
     <string name="login_text">Login</string>
     <string name="register_text">Register</string>
-    <string name="username_text_input">Username</string>
-    <string name="password_text_input">Password</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="phone_text">Phone</string>
+    <string name="e_mail_text">E-mail</string>
 
 
     <string name="makeAd_headline">Make an Advertisement</string>

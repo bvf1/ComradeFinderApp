@@ -24,24 +24,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/username_text_input"
+        android:hint="@string/username_text"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:padding="24dp"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="241dp" />
+        tools:layout_editor_absoluteY="241dp"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/password_text_input"
+        android:hint="@string/password_text"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:padding="24dp"
         tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="329dp" />
+        tools:layout_editor_absoluteY="329dp"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/phone_text"
+        android:inputType="phone"
+        android:minHeight="48dp"
+        android:padding="24dp"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/editTextEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/e_mail_text"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:padding="24dp"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/register_button"
