@@ -11,6 +11,9 @@
     <string name="password_text">Password</string>
     <string name="phone_text">Phone</string>
     <string name="e_mail_text">E-mail</string>
+    <string name="name_of_company_text">Name of company</string>
+    <string name="company_account_switch">Is this a company account?</string>
+    <string name="social_security_number_text">Social Security Number (SSN)</string>
 
 
     <string name="makeAd_headline">Make an Advertisement</string>

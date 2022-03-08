@@ -5,75 +5,124 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:isScrollContainer="true"
     android:orientation="vertical"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
     tools:context=".RegisterActivity">
 
-    <TextView
-        android:id="@+id/registerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="24dp"
-        android:text="@string/register_text"
-        android:textSize="25sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="147dp" />
-
-    <EditText
-        android:id="@+id/editTextRegisterUsername"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/username_text"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:padding="24dp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="241dp"
-        android:importantForAutofill="no" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/password_text"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:padding="24dp"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="329dp"
-        android:importantForAutofill="no" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/phone_text"
-        android:inputType="phone"
-        android:minHeight="48dp"
-        android:padding="24dp"
-        android:importantForAutofill="no" />
+            <TextView
+                android:id="@+id/registerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="@string/register_text"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="123dp"
+                tools:layout_editor_absoluteY="147dp" />
 
-    <EditText
-        android:id="@+id/editTextEmailAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/e_mail_text"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:padding="24dp"
-        android:importantForAutofill="no" />
+            <EditText
+                android:id="@+id/editTextRegisterUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/username_text"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:padding="24dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="241dp" />
 
-    <Button
-        android:id="@+id/register_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="24dp"
-        android:text="@string/register_text"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="434dp" />
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/password_text"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:padding="18dp"
+                tools:layout_editor_absoluteX="33dp"
+                tools:layout_editor_absoluteY="329dp" />
+
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/phone_text"
+                android:importantForAutofill="no"
+                android:inputType="phone"
+                android:minHeight="48dp"
+                android:padding="18dp" />
+
+            <EditText
+                android:id="@+id/editTextEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/e_mail_text"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:padding="18dp" />
+
+            <Switch
+                android:id="@+id/isCompanySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:minHeight="48dp"
+                android:text="@string/company_account_switch" />
+
+            <EditText
+                android:id="@+id/editTextCompanyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/name_of_company_text"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:padding="24dp"
+                android:visibility="gone"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:id="@+id/editTextSSN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/social_security_number_text"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:padding="18dp"
+                android:visibility="gone"
+                android:importantForAutofill="no" />
+
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="24dp"
+                android:text="@string/register_text"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="434dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
