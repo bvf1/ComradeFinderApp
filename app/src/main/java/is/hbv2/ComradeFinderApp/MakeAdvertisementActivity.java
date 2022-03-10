@@ -72,7 +72,8 @@ public class MakeAdvertisementActivity extends AppCompatActivity {
         mQuestionsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedQuestion = questions.get(posti)
+                questions.remove(i);
+                arrayAdapter.notifyDataSetChanged();
             }
         });
         /*
