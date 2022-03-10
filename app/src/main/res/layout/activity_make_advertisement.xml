@@ -101,11 +101,7 @@
                 android:text="@string/adQuestion_button" />
 
         </LinearLayout>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
+-
         <Button
             android:id="@+id/registerAd_button"
             android:layout_width="wrap_content"
