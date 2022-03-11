@@ -76,18 +76,6 @@ public class MakeAdvertisementActivity extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
             }
         });
-        /*
-        mQuestionsView.setOnItemClickListener(new OnItemClickListener()
-        {
-            // argument position gives the index of item which is clicked
-            public void onItemClick(AdapterView<?> arg0, View v,int position, long arg3)
-            {
-                String selectedmovie=movies.get(position);
-                Toast.makeText(getApplicationContext(), "Movie Selected : "+selectedmovie,   Toast.LENGTH_LONG).show();
-            }
-        });*/
-
-
 
         // register ad
         mAdButton = findViewById(R.id.registerAd_button);
@@ -98,32 +86,8 @@ public class MakeAdvertisementActivity extends AppCompatActivity {
 
             getInfoFromForm();
             /// where do we want to go
-        });/*
-        mAddQuestionButton = (Button) findViewById(R.id.addQuestion_button);
-        mAddQuestionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText text = findViewById(R.id.addQuestion);
-                String question = text.getText().toString();
-                mQuestionsView = findViewById(R.id.extraQuestionsView);
-/*--
-                if(questions.contains(question)) {
-                    Toast.makeText(getBaseContext(), "Item Already Added to the Array", Toast.LENGTH_LONG).show();
-                }
+        });
 
-                else if (question == null || question.trim().equals("")) {
-                    Toast.makeText(getBaseContext(), "Input Fields is Empty", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    questions.add(question);
-                   // ArrayAdapter<String> adapter = new ArrayAdapter<String>(MakeAdvertisementActivity.this, android.R.layout.simple_list_item_1, questions);
-                  //  mQuestionsView.setAdapter(adapter);
-                    ((EditText) findViewById(R.id.addQuestion)).setText("");
-                }
-
-
-
-        });*/
 
 
     }
