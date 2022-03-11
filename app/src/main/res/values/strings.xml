@@ -17,6 +17,7 @@
 
 
     <string name="makeAd_headline">Make an Advertisement</string>
+    <string name="home_headline">Home Page</string>
     <string name="title_label">Title</string>
     <string name="priceRange_label">Price Range</string>
     <string name="description_label">Description</string>
