@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComradeFinderApp">
         <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
