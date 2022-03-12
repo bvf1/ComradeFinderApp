@@ -6,6 +6,7 @@
     <!--Single words/labels-->
     <!--user login/registration-->
     <string name="login_text">Login</string>
+    <string name="logout_text">Login</string>
     <string name="register_text">Register</string>
     <string name="username_text">Username</string>
     <string name="password_text">Password</string>
@@ -14,6 +15,7 @@
     <string name="name_of_company_text">Name of company</string>
     <string name="company_account_switch">Is this a company account?</string>
     <string name="social_security_number_text">Social Security Number (SSN)</string>
+    <string name="not_logged_text">Not logged in</string>
 
 
     <string name="makeAd_headline">Make an Advertisement</string>
@@ -34,4 +36,6 @@
     <string name="registerApp_button">Register Application</string>
     <string name="extraQuestions">Extra Questions You Want To Add</string>
     <string name="adQuestion_button">Add</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
