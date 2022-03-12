@@ -58,14 +58,20 @@
             android:id="@+id/priceRange_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:text="@string/priceRange_label" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/priceRange_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/priceRange_label" />
+            android:layout_marginTop="10dp"
+            android:hint="@string/priceRange_label"
+            android:stepSize="10000"
+            android:valueFrom="@string/priceStart"
+            android:valueTo="@string/priceEnd"
+            app:values="@array/initial_range_slider_values"
+            app:labelBehavior="withinBounds"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
         <TextView
@@ -89,6 +95,7 @@
                 android:id="@+id/addQuestion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 android:layout_weight="1"
                 />
 
@@ -96,12 +103,11 @@
                 android:id="@+id/addQuestion_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_weight="0"
                 android:text="@string/adQuestion_button" />
 
         </LinearLayout>
--
         <Button
             android:id="@+id/registerAd_button"
             android:layout_width="wrap_content"

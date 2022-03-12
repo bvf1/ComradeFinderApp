@@ -1,7 +1,9 @@
 package is.hbv2.ComradeFinderApp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +14,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.RangeSlider;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 public class MakeAdvertisementActivity extends AppCompatActivity {
@@ -77,9 +82,24 @@ public class MakeAdvertisementActivity extends AppCompatActivity {
             }
         });
 
+        // priceRange
+        RangeSlider priceSlider = findViewById(R.id.priceRange_entry);
+        priceSlider.setLabelFormatter(new LabelFormatter() {
+            @NonNull
+            @Override
+            public String getFormattedValue(float value) {
+                //It is just an example
+                if (value == 3.0f)
+                    return "TEST";
+                return String.format("%,.0f", value);
+            }
+        });
+
+
         // register ad
         mAdButton = findViewById(R.id.registerAd_button);
         mAdButton.setOnClickListener(view -> {
+            Log.d("register", "register button pressed)");
             mTitle = findViewById(R.id.title_entry);
             mSalary = findViewById(R.id.priceRange_entry);
             mDescription = findViewById(R.id.description_entry);
@@ -95,18 +115,13 @@ public class MakeAdvertisementActivity extends AppCompatActivity {
     private void getInfoFromForm() {
         String title = mTitle.getText().toString();
         // mSalary
+        List salary = mSalary.getValues();
+        //Log.i("salary", typeOf salary);
         String description = mDescription.getText().toString();
+
 
         // put into backend
     }
 
 
-    private void makeList()  {
-        questions.add("question 1");
-        questions.add("question 2");
-
-    }
-    private void printlist() {
-
-    }
 }
