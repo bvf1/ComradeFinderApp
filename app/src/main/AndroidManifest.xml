@@ -11,7 +11,7 @@
         android:theme="@style/Theme.ComradeFinderApp">
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />

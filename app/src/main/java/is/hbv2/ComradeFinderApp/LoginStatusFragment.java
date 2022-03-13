@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class LoginStatusFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "loggedUser";
+    private static final String TAG = "LoginStatusFragment";
 
     private String mLoggedUser;
     private TextView mLoginText;
@@ -58,10 +60,11 @@ public class LoginStatusFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login_status, container, false);
 
         mLogButton = (Button) view.findViewById(R.id.buttonLogin);
-        if (mLoggedUser != "") {
+        if (mLoggedUser != "" && mLoggedUser != null) {
             mLoginText = (TextView) view.findViewById(R.id.textViewSignedUser);
             mLoginText.setText(mLoggedUser);
-            mLogButton.setText("@String/logout_text");
+            Log.d(TAG, "onCreateView: " + mLoggedUser + ".");
+            mLogButton.setText("Logout"); // Note that this is terrible but doesn't want to cooperate. So we're stuck with this.
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
