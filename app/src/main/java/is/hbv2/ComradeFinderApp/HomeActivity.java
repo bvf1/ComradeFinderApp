@@ -15,12 +15,14 @@ public class HomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
+        createLoginFragment();
+    }
+
+    private void createLoginFragment() {
         Fragment login = new LoginStatusFragment();
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.login_fragment_container, login)
                 .commit();
-
-
     }
 }

@@ -6,6 +6,7 @@
     tools:context=".LoginStatusFragment">
 
     <!--Allegedly, this parent is useless (ಥ‸ಥ)-->
+    <!--TODO: background color is ugly-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"

@@ -22,6 +22,7 @@ public class LoginStatusFragment extends Fragment {
     private static final String ARG_PARAM1 = "loggedUser";
     private static final String TAG = "LoginStatusFragment";
 
+    private View mThisView;
     private String mLoggedUser;
     private TextView mLoginText;
     private Button mLogButton;
@@ -44,6 +45,14 @@ public class LoginStatusFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    /*
+    private Callbacks mCallbacks;
+
+    // Host activity must implement this
+    public interface Callbacks {
+        void onLogOut();
+    }
+    /* ==Commented out until I'm sure we need this== */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,14 +66,25 @@ public class LoginStatusFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login_status, container, false);
+        mThisView = inflater.inflate(R.layout.fragment_login_status, container, false);
 
-        mLogButton = (Button) view.findViewById(R.id.buttonLogin);
-        if (mLoggedUser != "" && mLoggedUser != null) {
-            mLoginText = (TextView) view.findViewById(R.id.textViewSignedUser);
+        setLoggedUser(mLoggedUser);
+
+        return mThisView;
+    }
+
+
+
+    // Function used to update this fragment with a logged user.
+    // Pass "" or null to logout.
+    public void setLoggedUser(String user) {
+        mLogButton = (Button) mThisView.findViewById(R.id.buttonLogin);
+        if (user != "" && user != null) {
+            mLoggedUser = user;
+            mLoginText = (TextView) mThisView.findViewById(R.id.textViewSignedUser);
             mLoginText.setText(mLoggedUser);
             Log.d(TAG, "onCreateView: " + mLoggedUser + ".");
-            mLogButton.setText("Logout"); // Note that this is terrible but doesn't want to cooperate. So we're stuck with this.
+            mLogButton.setText("Logout"); // This is terrible but it doesn't allow me to reference a string
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -79,7 +99,5 @@ public class LoginStatusFragment extends Fragment {
                 }
             });
         }
-
-        return view;
     }
 }
