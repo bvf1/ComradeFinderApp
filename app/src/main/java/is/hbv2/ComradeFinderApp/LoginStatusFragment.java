@@ -84,7 +84,7 @@ public class LoginStatusFragment extends Fragment {
             mLoginText = (TextView) mThisView.findViewById(R.id.textViewSignedUser);
             mLoginText.setText(mLoggedUser);
             Log.d(TAG, "onCreateView: " + mLoggedUser + ".");
-            mLogButton.setText("Logout"); // This is terrible but it doesn't allow me to reference a string
+            mLogButton.setText(R.string.logout_text);
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

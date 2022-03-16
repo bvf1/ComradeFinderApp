@@ -46,6 +46,14 @@
         android:indeterminate="true"
         android:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/incorrectLoginText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:gravity="center"
+        android:textSize="20sp"/>
+
     <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"

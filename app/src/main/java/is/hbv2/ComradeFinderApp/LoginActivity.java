@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,9 +25,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordText;
     private Button mLoginButton;
     private ProgressBar mLoading;
+    private TextView mWrongLoginText;
     // NOTE: This implementation of keeping users is only being used while testing.
-    private HashMap<String, Integer> mUserFind;
-    private ArrayList<User> mUserData;
+    private static HashMap<String, Integer> mUserFind;
+    private static ArrayList<User> mUserData;
 
     private void initializeUsers() {
         mUserFind = new HashMap<>();
@@ -52,30 +54,48 @@ public class LoginActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_login);
 
+        initializeUsers();
+
 
         // Fetch text inputs
         mUsernameText = (EditText) findViewById(R.id.editTextUsername);
         mPasswordText = (EditText) findViewById(R.id.editTextPassword);
-        mLoading = (ProgressBar) findViewById(R.id.loadingAnimation);
+        getLoading();
+        getIncorrectLoginText();
 
         // Setup login
         mLoginButton = (Button) findViewById(R.id.login_button);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLoading.setVisibility(View.VISIBLE);
 
-                LoginRunnable loginRunnable = new LoginRunnable(mUsernameText.getText().toString(), mPasswordText.getText().toString());
-                Thread t = new Thread(loginRunnable);
-                t.start();
-                // TODO: Handle login
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                disableControls();
+
+                String username = mUsernameText.getText().toString();
+                String password = mPasswordText.getText().toString();
+
+                if (username == null || password == null ||
+                        username.equals("") || password.equals("")) {
+                    Log.d(TAG, "run: Empty login");
+                    enableControls(R.string.empty_login_error);
+                } else {
+                    Log.d(TAG, "run: Not empty login:" + username);
+                    int index = mUserFind.get(username);
+                    User u = mUserData.get(index);
+                    if (username.equals(u.getUsername()) && password.equals(u.getPassword())) {
+                        savedInstanceState.putString("loggedInUserUsername", u.getUsername());
+                        savedInstanceState.putLong("LoggedInUserID", u.getID());
+                        Log.d(TAG, "run: Success. User logged in: " + u.getUsername());
+                    } else {
+                        enableControls(R.string.incorrect_login);
+                    }
                 }
-                //mLoading.setVisibility(View.GONE);
 
+                /*
+                LoginRunnable loginRunnable = new LoginRunnable(mUsernameText.getText().toString(), mPasswordText.getText().toString());
+                Thread t = new Thread(new ThreadGroup("fetchLogin"), loginRunnable);
+                t.start();
+                /**/
                 // savedInstanceState.putString("username", mUsernameText.getText().toString());
                 // savedInstanceState.putString("userID", ???);
                 // Use java.util.concurrent for this.
@@ -83,8 +103,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
+    /* This thread may be useful later to account for slow connections.
     // Thread used to login.
     class LoginRunnable implements Runnable {
         String username;
@@ -105,6 +127,52 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             Log.d(TAG, "run: thread finished run");
+            if (this.username == null || this.password == null ||
+                    this.username.equals("") || this.password.equals("")) {
+                Log.d(TAG, "run: Empty login");
+                getIncorrectLoginText();
+                mWrongLoginText.setText(R.string.empty_login_error);
+                return;
+            }
+            Log.d(TAG, "run: Not empty login:" + this.username);
+            int index = mUserFind.get(this.username);
+            User u = mUserData.get(index);
+            if (this.username.equals(u.getUsername()) && this.password.equals(u.getPassword())) {
+                Log.d(TAG, "run: Success");
+            } else {
+                getIncorrectLoginText();
+                mWrongLoginText.setText(R.string.incorrect_login);
+            }
         }
     }
+    /**/
+
+    private void disableControls() {
+        mWrongLoginText.setText("");
+        mLoading.setVisibility(View.VISIBLE);
+        mUsernameText.setEnabled(false);
+        mPasswordText.setEnabled(false);
+        mLoginButton.setEnabled(false);
+    }
+
+    private void enableControls(int stringID) {
+        mWrongLoginText.setText(stringID);
+        mLoading.setVisibility(View.GONE);
+        mUsernameText.setEnabled(true);
+        mPasswordText.setEnabled(true);
+        mLoginButton.setEnabled(true);
+    }
+
+    private void getIncorrectLoginText() {
+        if (mWrongLoginText == null) {
+            mWrongLoginText = (TextView) findViewById(R.id.incorrectLoginText);
+        }
+    }
+
+    private void getLoading() {
+        if (mLoading == null) {
+            mLoading = (ProgressBar) findViewById(R.id.loadingAnimation);
+        }
+    }
+    /**/
 }
