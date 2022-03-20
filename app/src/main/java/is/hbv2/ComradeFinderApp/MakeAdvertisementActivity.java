@@ -1,12 +1,8 @@
 package is.hbv2.ComradeFinderApp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,13 +10,15 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.slider.RangeSlider;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MakeAdvertisementActivity extends AppCompatActivity {
+import is.hbv2.ComradeFinderApp.Entities.Ad;
 
+public class MakeAdvertisementActivity extends AppCompatActivity { //implements View.OnClickListener, AcceptAdvertisementFragment. {DialogListener {
 
 
     private Button mAdButton;
@@ -29,8 +27,8 @@ public class MakeAdvertisementActivity extends AppCompatActivity {
 
 
     private EditText mTitle;
-    private RangeSlider mSalary ; // what kind of widget to use
     private EditText mDescription;
+    private RangeSlider mSalary ; // what kind of widget to use
     private ArrayList<String> questions = new ArrayList<>();
     private ArrayList<String> addedTags = new ArrayList<>();
     private ListView mQuestionsView;
@@ -135,12 +133,17 @@ public class MakeAdvertisementActivity extends AppCompatActivity {
     }
 
     private void getInfoFromForm() {
-        String title = mTitle.getText().toString();
-        // mSalary
-        List<Float> salary = mSalary.getValues();
-        //Log.i("salary", typeOf salary);
-        String description = mDescription.getText().toString();
-
+        Ad ad = new Ad(
+                mTitle.getText().toString(),
+                mDescription.getText().toString(),
+                mSalary.getValues().toString(),
+                questions,
+                "temp",
+                "",
+                addedTags
+        );
+        Log.d("makeAdd","in getform form, ");
+        Log.d("makeAd", String.valueOf(ad));
 
         // put into backend
     }
