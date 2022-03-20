@@ -26,7 +26,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button mLoginButton;
     private ProgressBar mLoading;
     private TextView mWrongLoginText;
+
     // NOTE: This implementation of keeping users is only being used while testing.
+    //       We will change this once we establish access to the backend.
     private static HashMap<String, Integer> mUserFind;
     private static ArrayList<User> mUserData;
 
@@ -71,28 +73,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 disableControls();
 
+
                 String username = mUsernameText.getText().toString();
                 String password = mPasswordText.getText().toString();
 
-                if (username == null || password == null ||
-                        username.equals("") || password.equals("")) {
-                    Log.d(TAG, "run: Empty login");
-                    enableControls(R.string.empty_login_error);
-                } else {
-                    Log.d(TAG, "run: Not empty login:" + username);
-                    int index = mUserFind.get(username);
-                    User u = mUserData.get(index);
-                    if (username.equals(u.getUsername()) && password.equals(u.getPassword())) {
-                        savedInstanceState.putString("loggedInUserUsername", u.getUsername());
-                        savedInstanceState.putLong("LoggedInUserID", u.getID());
-                        Log.d(TAG, "run: Success. User logged in: " + u.getUsername());
-                    } else {
-                        enableControls(R.string.incorrect_login);
-                    }
-                }
-
-                /*
-                LoginRunnable loginRunnable = new LoginRunnable(mUsernameText.getText().toString(), mPasswordText.getText().toString());
+                LoginRunnable loginRunnable = new LoginRunnable(username, password, savedInstanceState);
                 Thread t = new Thread(new ThreadGroup("fetchLogin"), loginRunnable);
                 t.start();
                 /**/
@@ -106,20 +91,23 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    /* This thread may be useful later to account for slow connections.
+
     // Thread used to login.
     class LoginRunnable implements Runnable {
         String username;
         String password;
+        Bundle savedInstanceState;
 
-        LoginRunnable(String username, String password) {
+        LoginRunnable(String username, String password, Bundle savedInstanceState) {
             this.username = username;
             this.password = password;
+            this.savedInstanceState = savedInstanceState;
         }
 
         @Override
         public void run() {
-            // Right now, this only tests what happens while logging in.
+            // TODO: We might want to add a timer in case the login takes too long
+            // Simulate the time it takes to login
             Log.d(TAG, "run: thread started run");
             try {
                 Thread.sleep(3000);
@@ -127,21 +115,45 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             Log.d(TAG, "run: thread finished run");
+
             if (this.username == null || this.password == null ||
                     this.username.equals("") || this.password.equals("")) {
                 Log.d(TAG, "run: Empty login");
-                getIncorrectLoginText();
-                mWrongLoginText.setText(R.string.empty_login_error);
-                return;
-            }
-            Log.d(TAG, "run: Not empty login:" + this.username);
-            int index = mUserFind.get(this.username);
-            User u = mUserData.get(index);
-            if (this.username.equals(u.getUsername()) && this.password.equals(u.getPassword())) {
-                Log.d(TAG, "run: Success");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        enableControls(R.string.empty_login_error);
+                    }
+                });
             } else {
-                getIncorrectLoginText();
-                mWrongLoginText.setText(R.string.incorrect_login);
+                Log.d(TAG, "run: Not empty login:" + this.username);
+                if (!mUserFind.containsKey(this.username)) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            enableControls(R.string.incorrect_login);
+                        }
+                    });
+                    return;
+                }
+                int index = mUserFind.get(this.username);
+                User u = mUserData.get(index);
+                if (this.username.equals(u.getUsername()) && this.password.equals(u.getPassword())) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // TODO: We have confirmed login. Now we need to apply this login.
+                            Log.d(TAG, "run: Success. User logged in: " + u.getUsername());
+                        }
+                    });
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            enableControls(R.string.incorrect_login);
+                        }
+                    });
+                }
             }
         }
     }
