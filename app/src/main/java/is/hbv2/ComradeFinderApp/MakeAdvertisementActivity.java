@@ -6,11 +6,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.slider.RangeSlider;
 
@@ -18,7 +22,7 @@ import java.util.ArrayList;
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
-public class MakeAdvertisementActivity extends AppCompatActivity { //implements View.OnClickListener, AcceptAdvertisementFragment. {DialogListener {
+public class MakeAdvertisementActivity extends FragmentActivity { //implements View.OnClickListener, AcceptAdvertisementFragment. {DialogListener {
 
 
     private Button mAdButton;
@@ -34,13 +38,13 @@ public class MakeAdvertisementActivity extends AppCompatActivity { //implements 
     private ListView mQuestionsView;
     private ListView mAddedTagsView;
     private Spinner mTags;
+    private LinearLayout mAd;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_advertisement);
-
 
 
         // adding questions to list view
@@ -123,13 +127,29 @@ public class MakeAdvertisementActivity extends AppCompatActivity { //implements 
             mTitle = findViewById(R.id.title_entry);
             mSalary = findViewById(R.id.priceRange_entry);
             mDescription = findViewById(R.id.description_entry);
-
-            getInfoFromForm();
-            /// where do we want to go
+            createAdFragment();
         });
+    }
 
 
 
+    private void createAdFragment() {
+        Ad ad = new Ad(
+                mTitle.getText().toString(),
+                mDescription.getText().toString(),
+                mSalary.getValues().toString(),
+                questions,
+                "temp",
+                "",
+                addedTags
+        );
+
+        Fragment adFragment= new AdvertisementFragment(ad);
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .add(R.id.advertisement_fragment_container, adFragment)
+                .hide(adFragment)
+                .commit();
     }
 
     private void getInfoFromForm() {

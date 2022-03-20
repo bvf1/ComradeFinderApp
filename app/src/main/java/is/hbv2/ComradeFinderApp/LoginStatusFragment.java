@@ -40,6 +40,7 @@ public class LoginStatusFragment extends Fragment {
      */
     public static LoginStatusFragment newInstance(String loggedUser) {
         LoginStatusFragment fragment = new LoginStatusFragment();
+
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, loggedUser);
         fragment.setArguments(args);
@@ -59,6 +60,8 @@ public class LoginStatusFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mLoggedUser = getArguments().getString(ARG_PARAM1);
+            Log.d("here", "here 1");
+
         }
     }
 

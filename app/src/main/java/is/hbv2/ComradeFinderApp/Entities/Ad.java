@@ -16,6 +16,10 @@ public class Ad {
     private List<String> tags;
     private List<Application> applications;
 
+    public Ad() {
+
+    }
+
 
     public Ad(String title, String description, String salaryRange, List<String> extraQuestions, String company, String linkToPDFImage, List<String> tags) {
         this.title = title;
