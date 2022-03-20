@@ -11,10 +11,12 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.slider.RangeSlider;
 
@@ -38,13 +40,16 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
     private ListView mQuestionsView;
     private ListView mAddedTagsView;
     private Spinner mTags;
-    private LinearLayout mAd;
+    private String[] mAdValues;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_advertisement);
+        createAdFragment();
+
 
 
         // adding questions to list view
@@ -124,46 +129,56 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
         mAdButton = findViewById(R.id.registerAd_button);
         mAdButton.setOnClickListener(view -> {
             Log.d("register", "register button pressed)");
-            mTitle = findViewById(R.id.title_entry);
-            mSalary = findViewById(R.id.priceRange_entry);
-            mDescription = findViewById(R.id.description_entry);
-            createAdFragment();
+            getInfoFromForm();
+            showAdFragment();
         });
     }
 
 
 
     private void createAdFragment() {
-        Ad ad = new Ad(
-                mTitle.getText().toString(),
-                mDescription.getText().toString(),
-                mSalary.getValues().toString(),
-                questions,
-                "temp",
-                "",
-                addedTags
-        );
-
-        Fragment adFragment= new AdvertisementFragment(ad);
+        AdvertisementFragment fragment = AdvertisementFragment.newInstance(mAdValues);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
-                .add(R.id.advertisement_fragment_container, adFragment)
-                .hide(adFragment)
+                .add(R.id.advertisement_fragment_container, fragment)
+                .addToBackStack(null)
+                .hide(fragment)
                 .commit();
     }
 
+    private void showAdFragment() {
+
+        FragmentManager fm = getSupportFragmentManager();
+
+        AdvertisementFragment fragment = (AdvertisementFragment) fm.findFragmentById(R.id.advertisement_fragment_container);
+
+        if (fragment != null) {
+            Log.d("showadfragment", "not null");
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.).commit();
+
+        }
+    }
+
     private void getInfoFromForm() {
-        Ad ad = new Ad(
-                mTitle.getText().toString(),
-                mDescription.getText().toString(),
-                mSalary.getValues().toString(),
-                questions,
-                "temp",
-                "",
-                addedTags
-        );
+        try  {
+            Ad ad = new Ad(
+                    mTitle.getText().toString(),
+                    mDescription.getText().toString(),
+                    mSalary.getValues().toString(),
+                    questions,
+                    "temp",
+                    "",
+                    addedTags
+            );
+
+        } catch (NullPointerException e) {
+            Log.e("new ad", e.toString());
+        }
+        showAdFragment();
+
         Log.d("makeAdd","in getform form, ");
-        Log.d("makeAd", String.valueOf(ad));
+
 
         // put into backend
     }

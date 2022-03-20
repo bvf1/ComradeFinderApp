@@ -60,7 +60,6 @@ public class LoginStatusFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mLoggedUser = getArguments().getString(ARG_PARAM1);
-            Log.d("here", "here 1");
 
         }
     }
