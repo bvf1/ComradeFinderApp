@@ -106,7 +106,8 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            // Right now, this only tests what happens while logging in.
+            // TODO: We might want to add a timer in case the login takes too long
+            // Simulate the time it takes to login
             Log.d(TAG, "run: thread started run");
             try {
                 Thread.sleep(3000);
