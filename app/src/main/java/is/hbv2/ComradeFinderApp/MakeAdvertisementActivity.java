@@ -2,9 +2,11 @@ package is.hbv2.ComradeFinderApp;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
     private Button mAddQuestionButton;
     private Button mAddTagsButton;
 
+    private LinearLayout mMakeAdvertisement;
 
     private EditText mTitle;
     private EditText mDescription;
@@ -43,7 +46,7 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_advertisement);
-        createAdFragment();
+      //  createAdFragment();
 
 
 
@@ -135,12 +138,15 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
 
 
     private void createAdFragment() {
+        mMakeAdvertisement = findViewById(R.id.MakeAdvertisement);
+        mMakeAdvertisement.setVisibility(View.INVISIBLE);
+
         AdvertisementFragment fragment = AdvertisementFragment.newInstance();
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.advertisement_fragment_container, fragment)
                 .addToBackStack(null)
-                .hide(fragment)
+                .show(fragment)
                 .commit();
     }
 
@@ -171,7 +177,7 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
                     addedTags
             );
 
-        showAdFragment();
+        createAdFragment();
 
         Log.d("makeAdd","in getform form, ");
 

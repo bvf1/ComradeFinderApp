@@ -57,6 +57,7 @@ public class AdvertisementFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Log.d("here", "here 2");
     }
 
