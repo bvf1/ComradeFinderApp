@@ -8,6 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
@@ -22,8 +27,14 @@ public class AdvertisementFragment extends Fragment {
     private static final String ARG_PARAM1 = "ad";
     private static final String TAG = "AdvertisementFragment";
 
-    private String[] mAd;
-    private View mViewAd;
+    private TextView mCompany;
+    private TextView mTitle;
+    private TextView mDescription;
+    private TextView mSalary;
+    private TextView mQuestions;
+    private TextView mPDF;
+    private TextView mTags;
+
 
     public AdvertisementFragment() {
         // Required empty public constructor
@@ -33,15 +44,12 @@ public class AdvertisementFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param adValues Parameter 1.
      * @return A new instance of fragment AdvertisementFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static AdvertisementFragment newInstance(String[] adValues) {
+    public static AdvertisementFragment newInstance() {
 
         AdvertisementFragment fragment = new AdvertisementFragment();
         Bundle args = new Bundle();
-        args.putStringArray(ARG_PARAM1, adValues);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,10 +58,6 @@ public class AdvertisementFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("here", "here 2");
-
-        if (getArguments() != null) {
-            mAd = getArguments().getStringArray(ARG_PARAM1);
-        }
     }
 
     @Override
@@ -62,16 +66,32 @@ public class AdvertisementFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_advertisement, container, false);
-        mViewAd = view.findViewById(R.id.ad_view);
+        mCompany = view.findViewById(R.id.companyName);
+        mTitle = view.findViewById(R.id.adTitle);
+        mDescription = view.findViewById(R.id.adDescription);
+        mSalary = view.findViewById(R.id.salary);
+        mQuestions = view.findViewById(R.id.questions);
+        mPDF = view.findViewById(R.id.pdf);
+        mTags = view.findViewById(R.id.tags);
 
-        setAd(mAd);
+        Log.d("onCreate", "here");
 
         return view;
     }
 
-    public void setAd(String[] adValues) {
-        if (adValues == null) Log.d("adValues", "null");
+    public void setAd(Ad ad) {
+        if (ad == null) Log.d("adValues", "null");
+        else {
+            Log.d("adValues", "not null");
+            mCompany.setText(ad.getCompany());
+            mTitle.setText(ad.getTitle());
+            mDescription.setText(ad.getDescription());
+            mSalary.setText(ad.getSalaryRange());
 
-        Log.d(TAG, "adValues: " + adValues);
+            mQuestions.setText("temp");
+            mPDF.setText(ad.getLinkToPDFImage());
+
+            mTags.setText("temp");
+        }
     }
 }
