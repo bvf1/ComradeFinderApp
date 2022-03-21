@@ -81,9 +81,9 @@ public class AdvertisementFragment extends Fragment {
     }
 
     public void setAd(Ad ad) {
-        if (ad == null) Log.d("adValues", "null");
-        else {
+        try {
             Log.d("adValues", "not null");
+
             mCompany.setText(ad.getCompany());
             mTitle.setText(ad.getTitle());
             mDescription.setText(ad.getDescription());
@@ -93,6 +93,9 @@ public class AdvertisementFragment extends Fragment {
             mPDF.setText(ad.getLinkToPDFImage());
 
             mTags.setText("temp");
+        } catch (NullPointerException e) {
+            Log.d("setAd", e.toString());
+
         }
     }
 }

@@ -142,6 +142,7 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
         mMakeAdvertisement.setVisibility(View.INVISIBLE);
 
         AdvertisementFragment fragment = AdvertisementFragment.newInstance();
+        fragment.setAd(mAd);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.advertisement_fragment_container, fragment)
@@ -167,6 +168,7 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
     }
 
     private void getInfoFromForm() {
+        try {
             mAd = new Ad(
                     mTitle.getText().toString(),
                     mDescription.getText().toString(),
@@ -176,7 +178,9 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
                     "temp",
                     addedTags
             );
-
+        } catch(NullPointerException e) {
+            Log.d("new Ad", e.toString());
+        }
         createAdFragment();
 
         Log.d("makeAdd","in getform form, ");
