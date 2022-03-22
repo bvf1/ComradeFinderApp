@@ -1,6 +1,8 @@
 package is.hbv2.ComradeFinderApp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -22,6 +24,8 @@ public class MakeApplicationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_application);
+
+        createLoginFragment();
 
         mAppButton = findViewById(R.id.registerApp_button);
         mAppButton.setOnClickListener(view -> {
@@ -51,5 +55,15 @@ public class MakeApplicationActivity extends AppCompatActivity {
 
         // put info into database
 
+    }
+
+
+    // Puts LoginStatus fragment in login_fragment_container
+    private void createLoginFragment() {
+        Fragment login = new LoginStatusFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .add(R.id.login_fragment_container, login)
+                .commit();
     }
 }

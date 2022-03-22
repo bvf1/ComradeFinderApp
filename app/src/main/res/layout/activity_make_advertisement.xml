@@ -20,6 +20,13 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/login_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="top"
+        android:orientation="horizontal" />
+
+    <LinearLayout
         android:id="@+id/MakeAdvertisement"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,116 +38,82 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
+            android:gravity="center"
             android:text="@string/makeAd_headline" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/title_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/title_label" />
-
-            <EditText
-                android:id="@+id/title_entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/title_label"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:minHeight="48dp"
-                tools:ignore="DuplicateSpeakableTextCheck" />
-
-            <TextView
-                android:id="@+id/description_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/description_label" />
-
-            <EditText
-                android:id="@+id/description_entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/description_label"
-                android:importantForAutofill="no"
-                android:inputType="textMultiLine"
-                android:minHeight="100dp"
-                android:textColorHint="#78909C"
-                tools:ignore="DuplicateSpeakableTextCheck" />
-
-            <TextView
-                android:id="@+id/priceRange_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/priceRange_label" />
-
-            <com.google.android.material.slider.RangeSlider
-                android:id="@+id/priceRange_entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/priceRange_label"
-                android:stepSize="10000"
-                android:valueFrom="@string/priceStart"
-                android:valueTo="@string/priceEnd"
-                app:values="@array/initial_range_slider_values"
-                app:labelBehavior="withinBounds"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-
-            <TextView
-                android:id="@+id/extraQuestions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/extraQuestions" />
-
-
-            <ListView
-                android:id="@+id/extraQuestionsView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="0">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_label" />
 
                 <EditText
-                    android:id="@+id/addQuestion"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/title_entry"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/title_label"
+                    android:importantForAutofill="no"
                     android:inputType="text"
-                    android:layout_weight="1"
-                    />
+                    android:minHeight="48dp"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
 
-                <Button
-                    android:id="@+id/addQuestion_button"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/description_label"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_weight="0"
-                    android:text="@string/adQuestion_button" />
+                    android:text="@string/description_label" />
 
-            </LinearLayout>
+                <EditText
+                    android:id="@+id/description_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/description_label"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:minHeight="100dp"
+                    android:textColorHint="#78909C"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/priceRange_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/priceRange_label" />
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/priceRange_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/priceRange_label"
+                    android:stepSize="10000"
+                    android:valueFrom="@string/priceStart"
+                    android:valueTo="@string/priceEnd"
+                    app:labelBehavior="withinBounds"
+                    app:values="@array/initial_range_slider_values"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
 
                 <TextView
-                    android:id="@+id/addTags"
+                    android:id="@+id/extraQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/addTags" />
+                    android:text="@string/extraQuestions" />
+
 
                 <ListView
-                    android:id="@+id/addedTagsView"
+                    android:id="@+id/extraQuestionsView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -148,30 +121,72 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
-                    <Spinner
-                        android:id="@+id/allTags"
+
+                    <EditText
+                        android:id="@+id/addQuestion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        />
+                        android:inputType="text" />
+
                     <Button
-                        android:id="@+id/addTag_button"
+                        android:id="@+id/addQuestion_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_weight="0"
                         android:text="@string/adQuestion_button" />
+
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/addTags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/addTags" />
+
+                    <ListView
+                        android:id="@+id/addedTagsView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/allTags"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:id="@+id/addTag_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_weight="0"
+                            android:text="@string/adQuestion_button" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/registerAd_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registerAd_button" />
+
+
             </LinearLayout>
+        </ScrollView>
 
-            <Button
-                android:id="@+id/registerAd_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/registerAd_button" />
-
-
-        </LinearLayout>
     </LinearLayout>
 
 

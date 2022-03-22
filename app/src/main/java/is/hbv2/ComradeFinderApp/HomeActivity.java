@@ -18,6 +18,7 @@ public class HomeActivity extends AppCompatActivity {
         createLoginFragment();
     }
 
+    // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
         Fragment login = new LoginStatusFragment();
         FragmentManager fm = getSupportFragmentManager();

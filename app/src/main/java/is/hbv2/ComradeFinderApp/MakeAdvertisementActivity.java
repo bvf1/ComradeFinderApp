@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -48,6 +49,7 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
         setContentView(R.layout.activity_make_advertisement);
       //  createAdFragment();
 
+        createLoginFragment();
 
 
         // adding questions to list view
@@ -187,6 +189,15 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
 
 
         // put into backend
+    }
+
+    // Puts LoginStatus fragment in login_fragment_container
+    private void createLoginFragment() {
+        Fragment login = new LoginStatusFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .add(R.id.login_fragment_container, login)
+                .commit();
     }
 
 
