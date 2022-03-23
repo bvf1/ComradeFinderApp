@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
 
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
-        Fragment login = new LoginStatusFragment();
+        Fragment login = new LoginStatusFragment().newInstance("Paul");
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.login_fragment_container, login)
