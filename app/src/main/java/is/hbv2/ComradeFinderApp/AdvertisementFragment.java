@@ -1,5 +1,7 @@
 package is.hbv2.ComradeFinderApp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,10 +39,14 @@ public class AdvertisementFragment extends Fragment {
     private TextView mPDF;
     private TextView mTags;
 
+    private LinearLayout mAcceptReject;
+    private Button mAcceptButton;
+    private Button mBackButton;
 
     public AdvertisementFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -58,7 +66,7 @@ public class AdvertisementFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("here", "here 2");
+
     }
 
     @Override
@@ -75,24 +83,55 @@ public class AdvertisementFragment extends Fragment {
         mPDF = view.findViewById(R.id.pdf);
         mTags = view.findViewById(R.id.tags);
 
-        Log.d("onCreate", "here");
+        mAcceptReject = view.findViewById(R.id.accept_reject);
+        mAcceptButton = view.findViewById(R.id.accept_button);
+        mBackButton = view.findViewById(R.id.reject_button);
+
+        mBackButton.setOnClickListener(v -> {
+            getActivity().onBackPressed();
+        });
+
+        mAcceptButton.setOnClickListener(v -> {
+            mCallbacks.acceptAd();
+        });
 
         return view;
     }
 
-    public void setAd(Ad ad) {
+    private Callbacks mCallbacks;
+
+    public interface Callbacks {
+        void acceptAd();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+
+    public void setup(Ad ad) {
+        mAcceptReject.setVisibility(View.VISIBLE);
+        mAcceptButton.setText("Submit Ad");
+        if (ad.getCompany() == null) mCompany.setVisibility(View.INVISIBLE);
+
         try {
             Log.d("adValues", "not null");
-
-            mCompany.setText(ad.getCompany());
-            mTitle.setText(ad.getTitle());
-            mDescription.setText(ad.getDescription());
-            mSalary.setText(ad.getSalaryRange());
-
-            mQuestions.setText("temp");
+            mTitle.setText("Title: "+ ad.getTitle());
+            mDescription.setText("Description: " + ad.getDescription());
+            List<String> salary = ad.getSalaryRange();
+            mSalary.setText("Salary: From " + salary.get(0) + " to " + salary.get(1));
+            if (ad.getExtraQuestions().isEmpty()) mQuestions.setText("No added questions");
+            else mQuestions.setText("Extra Questions: " + ad.getExtraQuestions().toString());
             mPDF.setText(ad.getLinkToPDFImage());
-
-            mTags.setText("temp");
+            if (ad.getTags().isEmpty()) mTags.setText("No tags Selected");
+            else mTags.setText("Tags added: " + ad.getTags().toString());
         } catch (NullPointerException e) {
             Log.d("setAd", e.toString());
 

@@ -59,7 +59,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView" />
+
+        <include
+            android:id="@+id/accept_reject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            layout="@layout/accept_reject"/>
     </LinearLayout>
-    <!-- TODO: Update blank fragment layout -->
+
 
 </FrameLayout>

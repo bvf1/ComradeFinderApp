@@ -9,7 +9,7 @@ public class Ad {
     private long ID;
     private String title;
     private String description;
-    private String salaryRange;
+    private List<String> salaryRange;
     private List<String> extraQuestions;
     private String company;
     private String linkToPDFImage;
@@ -21,7 +21,7 @@ public class Ad {
     }
 
 
-    public Ad(String title, String description, String salaryRange, List<String> extraQuestions, String company, String linkToPDFImage, List<String> tags) {
+    public Ad(String title, String description, List<String> salaryRange, List<String> extraQuestions, String company, String linkToPDFImage, List<String> tags) {
         this.title = title;
         this.description = description;
         this.salaryRange = salaryRange;
@@ -55,11 +55,11 @@ public class Ad {
         this.description = description;
     }
 
-    public String getSalaryRange() {
+    public List<String> getSalaryRange() {
         return salaryRange;
     }
 
-    public void setSalaryRange(String salaryRange) {
+    public void setSalaryRange(List<String> salaryRange) {
         this.salaryRange = salaryRange;
     }
 

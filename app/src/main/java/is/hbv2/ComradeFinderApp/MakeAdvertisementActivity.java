@@ -18,10 +18,12 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.slider.RangeSlider;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
-public class MakeAdvertisementActivity extends FragmentActivity { //implements View.OnClickListener, AcceptAdvertisementFragment. {DialogListener {
+public class MakeAdvertisementActivity extends FragmentActivity implements AdvertisementFragment.Callbacks { //implements View.OnClickListener, AcceptAdvertisementFragment. {DialogListener {
 
 
     private Button mAdButton;
@@ -49,6 +51,7 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
         createAdFragment();
 
         mMakeAdvertisement = findViewById(R.id.MakeAdvertisement);
+
 
         // adding questions to list view
         mQuestionsView = findViewById(R.id.extraQuestionsView);
@@ -122,8 +125,7 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
             }
         });
 
-
-        // register ad
+        // PRESS REGISTER AD
         mAdButton = findViewById(R.id.registerAd_button);
         mAdButton.setOnClickListener(view -> {
             Log.d("register", "register button pressed)");
@@ -142,15 +144,10 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
 
     @Override
     public void onBackPressed() {
-        Log.d("where", "onback");
-
         toggleAdFragment(false);
-
-
     }
 
     private void createAdFragment() {
-      //
 
         AdvertisementFragment fragment = AdvertisementFragment.newInstance();
         FragmentManager fm = getSupportFragmentManager();
@@ -167,32 +164,43 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
         Log.d("back", "1");
 
         if (fragment != null) {
-            fragment.setAd(mAd);
-            Log.d("showadfragment", "not null");
+            fragment.setup(mAd);
             FragmentTransaction ft = fm.beginTransaction();
             if (toShow) {
                 ft.show(fragment);
                 mMakeAdvertisement.setVisibility(View.INVISIBLE);
-
 
             } else {
                 ft.hide(fragment);
                 mMakeAdvertisement.setVisibility(View.VISIBLE);
             }
             ft.commit();
-
         }
     }
 
     private void getInfoFromForm() {
         try {
+            String title = mTitle.getText().toString();
+            if (title == null) {
+                Toast.makeText(getBaseContext(), "Title is Empty", Toast.LENGTH_LONG).show();
+                title = "title";
+            }
+            String description = mDescription.getText().toString();
+            if (description == null) {
+                Toast.makeText(getBaseContext(), "Description is Empty", Toast.LENGTH_LONG).show();
+                description = "description";
+            }
+            List<Float> s = mSalary.getValues();
+            List<String> salary = new ArrayList<String>();
+            salary.add(String.valueOf(Math.round(s.get(0))));
+            salary.add(String.valueOf(Math.round(s.get(1))));
             mAd = new Ad(
-                    mTitle.getText().toString(),
-                    mDescription.getText().toString(),
-                    mSalary.getValues().toString(),
+                    title,
+                    description,
+                    salary,
                     questions,
-                    "temp",
-                    "temp",
+                    null,
+                    "Empty for now",
                     addedTags
             );
         } catch(NullPointerException e) {
@@ -200,10 +208,12 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
         }
         toggleAdFragment(true);
 
-
-
-        // put into backend
     }
 
-
+    public void acceptAd() {
+        Log.d("accept Ad", "acceptAd");
+        // TODO
+        // PUT AD INTO BACKEND
+        // GO TO HOMEPAGE?
+    }
 }
