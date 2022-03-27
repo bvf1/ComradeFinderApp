@@ -116,13 +116,16 @@ public class AdvertisementFragment extends Fragment {
     }
 
 
-    public void setup(Ad ad) {
-        mAcceptReject.setVisibility(View.VISIBLE);
-        mAcceptButton.setText("Submit Ad");
-        if (ad.getCompany() == null) mCompany.setVisibility(View.INVISIBLE);
+    public void setup(Ad ad, boolean showAcceptReject) {
+        if (showAcceptReject) {
+            mAcceptReject.setVisibility(View.VISIBLE);
+            mAcceptButton.setText("Submit Ad");
+            mCompany.setVisibility(View.INVISIBLE);
+        }
 
         try {
             Log.d("adValues", "not null");
+            // mCompany.setText(ad.getCompany());
             mTitle.setText("Title: "+ ad.getTitle());
             mDescription.setText("Description: " + ad.getDescription());
             List<String> salary = ad.getSalaryRange();

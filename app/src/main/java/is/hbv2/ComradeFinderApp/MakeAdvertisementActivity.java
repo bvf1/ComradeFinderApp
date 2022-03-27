@@ -164,7 +164,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         Log.d("back", "1");
 
         if (fragment != null) {
-            fragment.setup(mAd);
+            fragment.setup(mAd, true);
             FragmentTransaction ft = fm.beginTransaction();
             if (toShow) {
                 ft.show(fragment);
