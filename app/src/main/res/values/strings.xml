@@ -18,7 +18,8 @@
     <string name="not_logged_text">Not logged in</string>
     <string name="incorrect_login">Incorrect login info</string>
     <string name="empty_login_error">Please enter both your username and password</string>
-
+    <string name="ads_home_title">Title</string>
+    <string name="ads_home_salary">Salary Range</string>
 
     <string name="makeAd_headline">Make an Advertisement</string>
     <string name="home_headline">Home Page</string>
