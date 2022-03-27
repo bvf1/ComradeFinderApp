@@ -112,7 +112,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         mAddedTagsView.setAdapter(addedTagsAdapter);
 
 
-        // add t
+        // add tag to ad
         mAddTagsButton = (Button) findViewById(R.id.addTag_button);
         mAddTagsButton.setOnClickListener(view -> {
             int index = mTags.getLastVisiblePosition();
@@ -184,10 +184,11 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
             Toast.makeText(getBaseContext(), "Description is Empty", Toast.LENGTH_LONG).show();
             return;
         }
+
         List<Float> s = mSalary.getValues();
         List<String> salary = new ArrayList<String>();
-        salary.add(String.valueOf(Math.round(s.get(0))));
-        salary.add(String.valueOf(Math.round(s.get(1))));
+        salary.add(String.format("%,.0f", s.get(0)));
+        salary.add(String.format("%,.0f", s.get(1)));
         mAd = new Ad(
                 title,
                 description,

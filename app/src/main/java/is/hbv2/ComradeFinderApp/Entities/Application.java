@@ -5,6 +5,7 @@ public class Application {
     private long ID;
     private User user;
     private Ad ad;
+    private String ExtraInfo;
 
     public Application() {}
     public Application(User user, Ad ad) {
@@ -35,5 +36,13 @@ public class Application {
 
     public void setAd(Ad ad) {
         this.ad = ad;
+    }
+
+    public String getExtraInfo() {
+        return ExtraInfo;
+    }
+
+    public void setExtraInfo(String extraInfo) {
+        ExtraInfo = extraInfo;
     }
 }

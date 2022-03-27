@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".MakeApplicationActivity">
 
+
     <LinearLayout
         android:id="@+id/login_fragment_container"
         android:layout_width="match_parent"
@@ -15,123 +16,143 @@
         android:gravity="top"
         android:orientation="horizontal" />
 
-    <TextView
-        android:id="@+id/makeAdvert_headline"
+    <FrameLayout
+        android:id="@+id/application_fragment_container"
+        android:name="SimpleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_application">
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/MakeApplication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/makeApplication_headline" />
+        android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/makeAdvert_headline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:orientation="vertical">
+            android:text="@string/makeApplication_headline" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0">
 
-            <TextView
-                android:id="@+id/name_label"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/name_label" />
-
-            <EditText
-                android:id="@+id/name_Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/name_label"
-                android:importantForAutofill="no"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                tools:ignore="DuplicateSpeakableTextCheck" />
+                android:layout_weight="0"
+                android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/email_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/email_label" />
+                <TextView
+                    android:id="@+id/name_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name_label" />
 
-            <EditText
-                android:id="@+id/email_Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email_label"
-                android:importantForAutofill="no"
-                android:inputType="textEmailAddress" />
-
-            <TextView
-                android:id="@+id/phone_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/phone_label" />
-
-            <EditText
-                android:id="@+id/phone_Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="phone Number"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/position_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/position_label" />
-
-            <EditText
-                android:id="@+id/position_Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:textColorHint="#78909C"
-                tools:ignore="DuplicateSpeakableTextCheck" />
-
-            <TextView
-                android:id="@+id/lastCompany_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/lastCompany_label" />
-
-            <EditText
-                android:id="@+id/lastCompany_Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:textColorHint="#78909C"
-                tools:ignore="DuplicateSpeakableTextCheck" />
-
-            <TextView
-                android:id="@+id/adExtra_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/adExtra_label" />
-
-            <EditText
-                android:id="@+id/adExtra_Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:textColorHint="#78909C"
-                tools:ignore="DuplicateSpeakableTextCheck" />
+                <EditText
+                    android:id="@+id/name_Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name_label"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
 
 
-            <Button
-                android:id="@+id/registerApp_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/registerApp_button" />
+                <TextView
+                    android:id="@+id/email_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_label" />
+
+                <EditText
+                    android:id="@+id/email_Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email_label"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress" />
+
+                <TextView
+                    android:id="@+id/phone_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_label" />
+
+                <EditText
+                    android:id="@+id/phone_Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="phone Number"
+                    android:inputType="phone" />
+
+                <TextView
+                    android:id="@+id/position_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/position_label" />
+
+                <EditText
+                    android:id="@+id/position_Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textColorHint="#78909C"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+
+                <TextView
+                    android:id="@+id/lastCompany_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lastCompany_label" />
+
+                <EditText
+                    android:id="@+id/lastCompany_Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textColorHint="#78909C"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+
+                <TextView
+                    android:id="@+id/adExtra_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adExtra_label" />
+
+                <EditText
+                    android:id="@+id/adExtra_Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textColorHint="#78909C"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
 
 
-        </LinearLayout>
-    </ScrollView>
+                <Button
+                    android:id="@+id/registerApp_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registerApp_button" />
+
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
 
 </LinearLayout>

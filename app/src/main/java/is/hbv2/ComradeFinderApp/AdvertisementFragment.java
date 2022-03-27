@@ -65,8 +65,6 @@ public class AdvertisementFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -123,7 +121,7 @@ public class AdvertisementFragment extends Fragment {
             mCompany.setVisibility(View.INVISIBLE);
         }
 
-        try {
+
             Log.d("adValues", "not null");
             // mCompany.setText(ad.getCompany());
             mTitle.setText("Title: "+ ad.getTitle());
@@ -135,9 +133,6 @@ public class AdvertisementFragment extends Fragment {
             mPDF.setText(ad.getLinkToPDFImage());
             if (ad.getTags().isEmpty()) mTags.setText("No tags Selected");
             else mTags.setText("Tags added: " + ad.getTags().toString());
-        } catch (NullPointerException e) {
-            Log.d("setAd", e.toString());
 
-        }
     }
 }
