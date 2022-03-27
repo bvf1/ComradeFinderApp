@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,7 +18,7 @@ import java.util.List;
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
 public class HomeActivity extends AppCompatActivity {
-    private ListView listViewAd;
+    private LinearLayout listViewAd;
     private ArrayList<Ad> ads = new ArrayList<>();
 
 
@@ -33,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void populateListView() {
-        listViewAd = (ListView) findViewById(R.id.listViewAd);
+        listViewAd = (LinearLayout) findViewById(R.id.listViewAd);
         ads.add(new Ad("Title1", "Description1", new ArrayList<>(), new ArrayList<>(), "Comapny1", "LinkToImage1", new ArrayList<>()));
         ads.add(new Ad("Title2", "Description2", new ArrayList<>(), new ArrayList<>(), "Comapny2", "LinkToImage2", new ArrayList<>()));
         ads.add(new Ad("Title3", "Description3", new ArrayList<>(), new ArrayList<>(), "Comapny3", "LinkToImage3", new ArrayList<>()));
@@ -44,7 +45,11 @@ public class HomeActivity extends AppCompatActivity {
         Fragment ad = new AdsHome().newInstance(adObject1.getTitle(), adObject1.getSalaryRange());
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
-                .replace(R.id.listViewAd, ad)
+                .add(R.id.listViewAd, ad)
+                .commit();
+        ad = new AdsHome().newInstance(adObject2.getTitle(), adObject2.getSalaryRange());
+        fm.beginTransaction()
+                .add(R.id.listViewAd, ad)
                 .commit();
         //TODO: Bæta við að sýna þessa items í home
     }
