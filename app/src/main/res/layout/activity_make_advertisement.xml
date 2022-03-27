@@ -8,6 +8,14 @@
     android:orientation="vertical"
     tools:context=".MakeAdvertisementActivity">
 
+
+    <LinearLayout
+        android:id="@+id/login_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="top"
+        android:orientation="horizontal" />
+
     <FrameLayout
         android:id="@+id/advertisement_fragment_container"
         android:name="SimpleFragment"
@@ -18,13 +26,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_advertisement">
     </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/login_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="top"
-        android:orientation="horizontal" />
 
     <LinearLayout
         android:id="@+id/MakeAdvertisement"

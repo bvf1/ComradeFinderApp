@@ -32,7 +32,7 @@
     <string name="email_label">Email</string>
     <string name="position_label">Position you are applying for</string>
     <string name="phone_label">Phone Number</string>
-    <string name="lastCompany_label">Síðasta fyrirtæki sem þú vannst hjá</string>
+    <string name="lastCompany_label">Last company you worked for</string>
     <string name="adExtra_label">References / Comments / Questions</string>
     <string name="registerAd_button">Register Ad</string>
     <string name="registerApp_button">Register Application</string>

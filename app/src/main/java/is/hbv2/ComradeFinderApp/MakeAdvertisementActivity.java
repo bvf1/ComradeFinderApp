@@ -138,11 +138,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("where", "onResume");
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -181,35 +177,28 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
     }
 
     private void getInfoFromForm() {
-        try {
-            String title = mTitle.getText().toString();
-            if (title == null) {
-                Toast.makeText(getBaseContext(), "Title is Empty", Toast.LENGTH_LONG).show();
-                title = "title";
-            }
-            String description = mDescription.getText().toString();
-            if (description == null) {
-                Toast.makeText(getBaseContext(), "Description is Empty", Toast.LENGTH_LONG).show();
-                description = "description";
-            }
-            List<Float> s = mSalary.getValues();
-            List<String> salary = new ArrayList<String>();
-            salary.add(String.valueOf(Math.round(s.get(0))));
-            salary.add(String.valueOf(Math.round(s.get(1))));
-            mAd = new Ad(
-                    title,
-                    description,
-                    salary,
-                    questions,
-                    null,
-                    "Empty for now",
-                    addedTags
-            );
-        } catch(NullPointerException e) {
-            Log.d("new Ad", e.toString());
+        String title = mTitle.getText().toString();
+        if (title.equals("")) { Toast.makeText(getBaseContext(), "Title is Empty", Toast.LENGTH_LONG).show();return; }
+        String description = mDescription.getText().toString();
+        if (description.equals("")) {
+            Toast.makeText(getBaseContext(), "Description is Empty", Toast.LENGTH_LONG).show();
+            return;
         }
-        toggleAdFragment(true);
+        List<Float> s = mSalary.getValues();
+        List<String> salary = new ArrayList<String>();
+        salary.add(String.valueOf(Math.round(s.get(0))));
+        salary.add(String.valueOf(Math.round(s.get(1))));
+        mAd = new Ad(
+                title,
+                description,
+                salary,
+                questions,
+                null,
+                "Empty for now",
+                addedTags
+        );
 
+        toggleAdFragment(true);
     }
 
     public void acceptAd() {
