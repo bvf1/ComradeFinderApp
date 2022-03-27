@@ -46,9 +46,9 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_advertisement);
-      //  createAdFragment();
+        createAdFragment();
 
-
+        mMakeAdvertisement = findViewById(R.id.MakeAdvertisement);
 
         // adding questions to list view
         mQuestionsView = findViewById(R.id.extraQuestionsView);
@@ -131,38 +131,55 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
             mSalary = findViewById(R.id.priceRange_entry);
             mDescription = findViewById(R.id.description_entry);
             getInfoFromForm();
-            showAdFragment();
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("where", "onResume");
+    }
 
+    @Override
+    public void onBackPressed() {
+        Log.d("where", "onback");
+
+        toggleAdFragment(false);
+
+
+    }
 
     private void createAdFragment() {
-        mMakeAdvertisement = findViewById(R.id.MakeAdvertisement);
-        mMakeAdvertisement.setVisibility(View.INVISIBLE);
+      //
 
         AdvertisementFragment fragment = AdvertisementFragment.newInstance();
-        fragment.setAd(mAd);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
-                .add(R.id.advertisement_fragment_container, fragment)
-                .addToBackStack(null)
-                .show(fragment)
+                .replace(R.id.advertisement_fragment_container, fragment)
+               // .addToBackStack(null)
+                .hide(fragment)
                 .commit();
     }
 
-    private void showAdFragment() {
-
+    private void toggleAdFragment(boolean toShow) {
         FragmentManager fm = getSupportFragmentManager();
-
         AdvertisementFragment fragment = (AdvertisementFragment) fm.findFragmentById(R.id.advertisement_fragment_container);
-
+        Log.d("back", "1");
 
         if (fragment != null) {
             fragment.setAd(mAd);
             Log.d("showadfragment", "not null");
             FragmentTransaction ft = fm.beginTransaction();
-            ft.show(fragment).commit();
+            if (toShow) {
+                ft.show(fragment);
+                mMakeAdvertisement.setVisibility(View.INVISIBLE);
+
+
+            } else {
+                ft.hide(fragment);
+                mMakeAdvertisement.setVisibility(View.VISIBLE);
+            }
+            ft.commit();
 
         }
     }
@@ -181,9 +198,8 @@ public class MakeAdvertisementActivity extends FragmentActivity { //implements V
         } catch(NullPointerException e) {
             Log.d("new Ad", e.toString());
         }
-        createAdFragment();
+        toggleAdFragment(true);
 
-        Log.d("makeAdd","in getform form, ");
 
 
         // put into backend
