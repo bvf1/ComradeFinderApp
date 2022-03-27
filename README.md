@@ -19,5 +19,5 @@ MakeApplicationActivity
 
 HomeActivity
   - Tengt við AdsHome og Ad entity
-  - Þetta er aðalsíðan sem að notandinn verður é eftir loggin
+  - Þetta er aðal síðan sem að notandinn verður á eftir loggin
   - Birtir ads (og seinna verður með onclick til að sýna ads details)
