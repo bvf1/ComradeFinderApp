@@ -11,11 +11,6 @@ Activites that are runnable:
  - RegisterActivity
 
 ### Activity descriptions
-MakeAdvertisementActivity 
-  - býr til advertisement
-
-MakeApplicationActivity 
-  - býr til application
 
 HomeActivity
   - Tengt við AdsHome og Ad entity
@@ -25,9 +20,15 @@ HomeActivity
 LoginActivity
   - Basic login. Virkar fyrir bæði venjuleg Users og Company Users
 
+MakeAdvertisementActivity 
+  - býr til advertisement
+
+MakeApplicationActivity 
+  - býr til application
+ 
 RegisterActivity
   - Toggle fyrir User og Company User Registration.
-
+  
 
 ### LoginStatusFragment
   - Sést efst á skjánum á MakeAdvertisementActivity, MakeApplicationActivity og HomeActivity
