@@ -37,6 +37,6 @@ RegisterActivity
 
 ### Backend
 
-As of right now, our backend from last semester hasn‘t been changed to RESTful and isn‘t being used yet. Here‘s a link to the github anyways: https://github.com/bvf1/ComradeFinder
+As of right now, our backend from last semester hasn‘t been changed to RESTful and isn‘t being used yet. Here‘s a link to the github anyways: https://github.com/bvf1/ComradeFinderApp/CodeReviewBranch
 
 Some things in our backend needs to be restructured a bit since we can‘t pass a reference to an object in memory through a JSON and instead need to pass an ID or Primary Key.
