@@ -24,6 +24,7 @@
             android:text="@string/home_headline" />
 
         <ListView
+            android:id="@+id/listViewAd"
             android:layout_width="match_parent"
             android:layout_height="193dp" />
     </LinearLayout>
