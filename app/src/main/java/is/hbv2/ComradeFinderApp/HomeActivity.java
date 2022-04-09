@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -17,7 +19,7 @@ import java.util.List;
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements LoginStatusFragment.Callbacks {
     private LinearLayout listViewAd;
     private ArrayList<Ad> ads = new ArrayList<>();
 
@@ -56,10 +58,20 @@ public class HomeActivity extends AppCompatActivity {
 
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
+        // user is logged in
+        //Fragment login = new LoginStatusFragment().newInstance("");
         Fragment login = new LoginStatusFragment().newInstance("Paul");
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.login_fragment_container, login)
                 .commit();
+
+    }
+
+    //
+    public void login() {
+        Log.d("login", "login in homepage");
+        Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+        startActivity(i);
     }
 }

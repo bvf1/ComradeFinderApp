@@ -1,5 +1,7 @@
 package is.hbv2.ComradeFinderApp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -46,14 +48,25 @@ public class LoginStatusFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    /*
+
     private Callbacks mCallbacks;
 
     // Host activity must implement this
     public interface Callbacks {
-        void onLogOut();
+      //  void onLogOut();
+        void login();
     }
-    /* ==Commented out until I'm sure we need this== */
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,6 +111,9 @@ public class LoginStatusFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     // TODO: Handle login redirect
+                    mCallbacks.login();
+                    Log.d("test", "login pushed");
+
                 }
             });
         }
