@@ -2,6 +2,7 @@ package is.hbv2.ComradeFinderApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -144,6 +145,10 @@ public class LoginActivity extends AppCompatActivity {
                         public void run() {
                             // TODO: We have confirmed login. Now we need to apply this login.
                             Log.d(TAG, "run: Success. User logged in: " + u.getUsername());
+
+                            // Go to homepage
+                            //Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                            //startActivity(i);
                         }
                     });
                 } else {
