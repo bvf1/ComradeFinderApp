@@ -1,5 +1,6 @@
 package is.hbv2.ComradeFinderApp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -207,6 +208,9 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         // TODO
         // PUT AD INTO BACKEND
         // GO TO HOMEPAGE?
+        Intent i = new Intent(MakeAdvertisementActivity.this, HomeActivity.class);
+        startActivity(i);
+
     }
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
