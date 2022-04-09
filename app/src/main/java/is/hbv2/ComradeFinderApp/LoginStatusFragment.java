@@ -110,10 +110,8 @@ public class LoginStatusFragment extends Fragment {
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: Handle login redirect
+                    // login redirect
                     mCallbacks.login();
-                    Log.d("test", "login pushed");
-
                 }
             });
         }
