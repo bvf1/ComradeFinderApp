@@ -1,12 +1,18 @@
 package is.hbv2.ComradeFinderApp.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Company extends Account {
 
+    @SerializedName("SSN")
     private int SSN;
+    @SerializedName("street")
     private String street;
+    @SerializedName("companyPhone")
     private String companyPhone;
+    @SerializedName("advertisements")
     private List<Ad> advertisements;
 
 

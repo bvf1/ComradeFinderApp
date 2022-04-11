@@ -16,17 +16,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import is.hbv2.ComradeFinderApp.Entities.Account;
 import is.hbv2.ComradeFinderApp.Entities.User;
+import is.hbv2.ComradeFinderApp.Network.NetworkCallback;
+import is.hbv2.ComradeFinderApp.Network.NetworkManager;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+
+    private NetworkManager mNetworkManager;
 
     private EditText mUsernameText;
     private EditText mPasswordText;
     private Button mLoginButton;
     private ProgressBar mLoading;
     private TextView mWrongLoginText;
+
 
     // NOTE: This implementation of keeping users is only being used while testing.
     //       We will change this once we establish access to the backend.
@@ -58,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initializeUsers();
+        mNetworkManager = NetworkManager.getInstance(this);
 
 
         // Fetch text inputs
@@ -108,14 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void run() {
             // TODO: We might want to add a timer in case the login takes too long
-            // Simulate the time it takes to login
-            Log.d(TAG, "run: thread started run");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.d(TAG, "run: thread finished run");
+            // PERFORM LOGIN OPERATION HERE
 
             if (this.username == null || this.password == null ||
                     this.username.equals("") || this.password.equals("")) {
@@ -128,37 +128,32 @@ public class LoginActivity extends AppCompatActivity {
                 });
             } else {
                 Log.d(TAG, "run: Not empty login:" + this.username);
-                if (!mUserFind.containsKey(this.username)) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            enableControls(R.string.incorrect_login);
-                        }
-                    });
-                    return;
-                }
-                int index = mUserFind.get(this.username);
-                User u = mUserData.get(index);
-                if (this.username.equals(u.getUsername()) && this.password.equals(u.getPassword())) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // TODO: We have confirmed login. Now we need to apply this login.
-                            Log.d(TAG, "run: Success. User logged in: " + u.getUsername());
+                mNetworkManager.login(this.username, this.password, new NetworkCallback<Account>() {
+                    @Override
+                    public void onSuccess(Account result) {
+                        // TODO: We have confirmed login. Now we need to apply this login.
+                        Log.d(TAG, "run: Success. User logged in: " + result.getUsername());
+                        Log.d(TAG, "run: Class type: " + result.getClass());
+                        savedInstanceState.putString("loggedUser", result.getUsername());
 
-                            // Go to homepage
-                            //Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                            //startActivity(i);
-                        }
-                    });
-                } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            enableControls(R.string.incorrect_login);
-                        }
-                    });
-                }
+                        // TODO: Then we need to redirect back from LoginActivity.
+                        // Go to homepage
+                        //Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                        //startActivity(i);
+                    }
+
+                    @Override
+                    public void onFailure(String errorString) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                enableControls(R.string.incorrect_login);
+                            }
+                        });
+                        return;
+                    }
+                });
+                Log.d(TAG, "Login thread finished");
             }
         }
     }

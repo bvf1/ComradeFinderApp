@@ -43,23 +43,25 @@ public class NetworkManager {
         return mQueue;
     }
 
-    /*
+    // TODO: Tests for connecting to backend failed.
     public void login(String username, String password, final NetworkCallback<Account> callback) {
         StringRequest request = new StringRequest(
-                Request.Method.GET, BASE_URL + "/" + username + "/" + password, new Response.Listener<String>() {
+                Request.Method.GET, BASE_URL + "Login/" + username + "/" + password, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
                         Type accType = new TypeToken<Account>(){}.getType();
                         Account account = gson.fromJson(response, accType);
+                        callback.onSuccess(account);
                     }
         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        callback.onFailure(error.toString());
                     }
         }
         );
     }
-    /* == We might need more mappings on the backend to support what we need to do == */
+    // TODO: Implement register
+    /* == We might need more mappings on the backend to support what we need to do. == */
 }

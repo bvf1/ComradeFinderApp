@@ -2,18 +2,30 @@ package is.hbv2.ComradeFinderApp.Entities;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 
 public class Ad {
+
+    @SerializedName("ID")
     private long ID;
+    @SerializedName("title")
     private String title;
+    @SerializedName("description")
     private String description;
+    @SerializedName("salaryRange")
     private List<String> salaryRange;
+    @SerializedName("extraQuestions")
     private List<String> extraQuestions;
+    @SerializedName("company")
     private String company;
+    @SerializedName("linkToPDFImage")
     private String linkToPDFImage;
+    @SerializedName("tags")
     private List<String> tags;
+    @SerializedName("applications")
     private List<Application> applications;
 
     public Ad() {
