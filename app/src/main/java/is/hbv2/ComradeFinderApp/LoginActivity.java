@@ -66,12 +66,11 @@ public class LoginActivity extends AppCompatActivity {
         initializeUsers();
         mNetworkManager = NetworkManager.getInstance(this);
 
-
         // Fetch text inputs
         mUsernameText = (EditText) findViewById(R.id.editTextUsername);
         mPasswordText = (EditText) findViewById(R.id.editTextPassword);
-        getLoading();
-        getIncorrectLoginText();
+        mLoading = (ProgressBar) findViewById(R.id.loadingAnimation);
+        mWrongLoginText = (TextView) findViewById(R.id.incorrectLoginText);
 
         // Setup login
         mLoginButton = (Button) findViewById(R.id.login_button);
@@ -105,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
         String username;
         String password;
         Bundle savedInstanceState;
-
         LoginRunnable(String username, String password, Bundle savedInstanceState) {
             this.username = username;
             this.password = password;
@@ -115,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void run() {
             // TODO: We might want to add a timer in case the login takes too long
+            // TODO: Maybe skip login if login request has been sent previously with same info
             // PERFORM LOGIN OPERATION HERE
 
             if (this.username == null || this.password == null ||
@@ -126,38 +125,43 @@ public class LoginActivity extends AppCompatActivity {
                         enableControls(R.string.empty_login_error);
                     }
                 });
-            } else {
-                Log.d(TAG, "run: Not empty login:" + this.username);
-                mNetworkManager.login(this.username, this.password, new NetworkCallback<Account>() {
-                    @Override
-                    public void onSuccess(Account result) {
-                        // TODO: We have confirmed login. Now we need to apply this login.
-                        Log.d(TAG, "run: Success. User logged in: " + result.getUsername());
-                        Log.d(TAG, "run: Class type: " + result.getClass());
-                        savedInstanceState.putString("loggedUser", result.getUsername());
-
-                        // TODO: Then we need to redirect back from LoginActivity.
-                        // Go to homepage
-                        //Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                        //startActivity(i);
-                    }
-
-                    @Override
-                    public void onFailure(String errorString) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                enableControls(R.string.incorrect_login);
-                            }
-                        });
+                return;
+            }
+            Log.d(TAG, "run: Not empty login:" + this.username);
+            mNetworkManager.login(this.username, this.password, new NetworkCallback<Account>() {
+                @Override
+                public void onSuccess(Account result) {
+                    // TODO: We have confirmed login. Now we need to apply this login.
+                    if (result == null) {
+                        enableControls(R.string.incorrect_login);
                         return;
                     }
-                });
-                Log.d(TAG, "Login thread finished");
-            }
+                    Log.d(TAG, "run: Success. User logged in: " + result.getUsername());
+                    Log.d(TAG, "run: Class type: " + result.getClass());
+                    savedInstanceState.putString("loggedUser", result.getUsername());
+
+                    // TODO: Then we need to redirect back from LoginActivity.
+                    // Go to homepage
+                    //Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    //startActivity(i);
+                }
+
+                @Override
+                public void onFailure(String errorString) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            enableControls(R.string.incorrect_login);
+                        }
+                    });
+                    return;
+                }
+            });
+            Log.d(TAG, "Login thread finished");
         }
     }
-    /**/
+
+
 
     private void disableControls() {
         mWrongLoginText.setText("");
@@ -175,16 +179,4 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton.setEnabled(true);
     }
 
-    private void getIncorrectLoginText() {
-        if (mWrongLoginText == null) {
-            mWrongLoginText = (TextView) findViewById(R.id.incorrectLoginText);
-        }
-    }
-
-    private void getLoading() {
-        if (mLoading == null) {
-            mLoading = (ProgressBar) findViewById(R.id.loadingAnimation);
-        }
-    }
-    /**/
 }
