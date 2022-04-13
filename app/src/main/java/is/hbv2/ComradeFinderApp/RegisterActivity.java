@@ -44,22 +44,35 @@ public class RegisterActivity extends AppCompatActivity {
         mPasswordText = (EditText) findViewById(R.id.editTextPassword);
         mPhoneText = (EditText) findViewById(R.id.editTextPhone);
         mEmailText = (EditText) findViewById(R.id.editTextEmailAddress);
-        mLoading = (ProgressBar) findViewById(R.id.loadingAnimation);
-        mWrongLoginText = (TextView) findViewById(R.id.incorrectLoginText);
+        mLoading = (ProgressBar) findViewById(R.id.loadingAnimation2);
+        mWrongLoginText = (TextView) findViewById(R.id.incorrectLoginText2);
+
+        mCompanyNameText = (EditText) findViewById(R.id.editTextCompanyName);
+        mSSNText = (EditText) findViewById(R.id.editTextSSN);
+        mCompanySwitch = (Switch) findViewById(R.id.isCompanySwitch);
 
         mRegisterButton = (Button) findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                disableControls();
+
                 String username = mUsernameText.getText().toString();
-                // TODO: Handle registration
+                String password = mPasswordText.getText().toString();
+                String phone = mPhoneText.getText().toString();
+                String email = mEmailText.getText().toString();
+
+                if (mCompanySwitch.isChecked()) {
+                    // TODO: Register company instead of user
+                    return;
+                }
+
+                RegisterActivity.RegisterUserRunnable registerRunnable = new RegisterActivity.RegisterUserRunnable(username, password, phone, email, savedInstanceState);
+                Thread t = new Thread(new ThreadGroup("registerUser"), registerRunnable);
+                t.start();
             }
         });
 
-        mCompanyNameText = (EditText) findViewById(R.id.editTextCompanyName);
-        mSSNText = (EditText) findViewById(R.id.editTextSSN);
-
-        mCompanySwitch = (Switch) findViewById(R.id.isCompanySwitch);
         mCompanySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -95,34 +108,26 @@ public class RegisterActivity extends AppCompatActivity {
             // TODO: We might want to add a timer in case the register takes too long
             // PERFORM LOGIN OPERATION HERE
 
-            // TODO: Decide what fields in the registration are required
             if (this.username == null || this.password == null ||
                     this.username.equals("") || this.password.equals("")) {
                 Log.d(TAG, "run: Empty login");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        enableControls(R.string.empty_login_error);
+                        enableControls(R.string.empty_register_error);
                     }
                 });
                 return;
             }
             Log.d(TAG, "run: Not empty login:" + this.username);
-            /*
-            mNetworkManager.login(this.username, this.password, new NetworkCallback<Account>() {
+            mNetworkManager.registerUser(this.username, this.password, this.phone, this.email, new NetworkCallback<Boolean>() {
                 @Override
-                public void onSuccess(Account result) {
-                    // TODO: We have confirmed login. Now we need to apply this login.
-                    if (result == null) {
-                        enableControls(R.string.incorrect_login);
-                        return;
-                    }
-                    Log.d(TAG, "run: Success. User logged in: " + result.getUsername());
-                    Log.d(TAG, "run: Class type: " + result.getClass());
-                    //savedInstanceState.putString("loggedUser", result.getUsername());
+                public void onSuccess(Boolean result) {
+                    // Registration complete
+                    Log.d(TAG, "run: Success. User created");
 
-                    // TODO: Then we need to redirect back from LoginActivity.
-                    // Go to homepage
+                    // TODO: Then we redirect back from RegisterActivity. Maybe straight to login.
+
                     //Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                     //startActivity(i);
                 }
@@ -133,6 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             enableControls(R.string.incorrect_login);
+                            Log.e(TAG, errorString);
                         }
                     });
                     return;
