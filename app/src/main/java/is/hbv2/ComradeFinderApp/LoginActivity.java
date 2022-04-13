@@ -140,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     User user;
                     Company company;
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                     // I started LoginActivity and logged in got an error.
                     // savedInstanceState was null.
                     // TODO: fix or work our way around this. Maybe this only happens when you start at login?
@@ -147,18 +148,19 @@ public class LoginActivity extends AppCompatActivity {
                         company = (Company) result;
                         Log.d(TAG, "run: Success. User logged in: " + company.getUsername());
                         Log.d(TAG, "run: Class type: " + company.getClass());
-                        savedInstanceState.putString("loggedUser", company.getUsername());
+                        //savedInstanceState.putString("loggedUser", company.getUsername());
+                        i.putExtra("user", company.getUsername());
                     }
                     if (result.getClass().equals(User.class)) {
                         user = (User) result;
                         Log.d(TAG, "run: Success. User logged in: " + user.getUsername());
                         Log.d(TAG, "run: Class type: " + user.getClass());
-                        savedInstanceState.putString("loggedUser", user.getUsername());
+                        //savedInstanceState.putString("loggedUser", user.getUsername());
+                        i.putExtra("user", user.getUsername());
                     }
 
                     // return to home activity
-                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    i.putExtra("user", "me");
+                    //i.putExtra("user", "me");
                     setResult(RESULT_OK,i);
                     finish();
                 }
