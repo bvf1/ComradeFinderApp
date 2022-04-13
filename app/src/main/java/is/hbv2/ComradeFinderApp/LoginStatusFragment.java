@@ -28,6 +28,7 @@ public class LoginStatusFragment extends Fragment {
     private String mLoggedUser;
     private TextView mLoginText;
     private Button mLogButton;
+    private Button mRegisterButton;
 
     public LoginStatusFragment() {
         // Required empty public constructor
@@ -94,9 +95,10 @@ public class LoginStatusFragment extends Fragment {
     // Pass "" or null to logout.
     public void setLoggedUser(String user) {
         mLogButton = (Button) mThisView.findViewById(R.id.buttonLogin);
+        mRegisterButton = (Button) mThisView.findViewById(R.id.buttonRegister);
+        mLoginText = (TextView) mThisView.findViewById(R.id.textViewSignedUser);
         if (user != "" && user != null) {
             mLoggedUser = user;
-            mLoginText = (TextView) mThisView.findViewById(R.id.textViewSignedUser);
             mLoginText.setText(mLoggedUser);
             Log.d(TAG, "onCreateView: " + mLoggedUser + ".");
             mLogButton.setText(R.string.logout_text);
@@ -106,16 +108,28 @@ public class LoginStatusFragment extends Fragment {
 
                     setLoggedUser("");
                     mLogButton.setText(R.string.login_text);
-
+                    mRegisterButton.setVisibility(View.VISIBLE);
                 }
             });
+            mRegisterButton.setVisibility(View.GONE);
         } else {
+            mLoggedUser = "";
+            mLoginText.setText(R.string.not_logged_text);
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mCallbacks.login();
                 }
             });
+            /* // TODO: Make register redirect to register
+            mRegisterButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mCallbacks.
+                }
+            });
+
+             */
         }
     }
 }
