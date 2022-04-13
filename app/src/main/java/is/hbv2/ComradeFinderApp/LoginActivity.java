@@ -137,7 +137,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     Log.d(TAG, "run: Success. User logged in: " + result.getUsername());
                     Log.d(TAG, "run: Class type: " + result.getClass());
-                    savedInstanceState.putString("loggedUser", result.getUsername());
 
                     // return to home activity
                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
@@ -154,23 +153,10 @@ public class LoginActivity extends AppCompatActivity {
                             enableControls(R.string.incorrect_login);
                         }
                     });
-
                     return;
                 }
             });
             Log.d(TAG, "Login thread finished");
-            if (savedInstanceState != null) {
-                savedInstanceState.putString("a", "me");
-
-                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(i);
-
-            }
-
-
-            else {
-                Log.d("why", "is null");
-            }
         }
     }
 
