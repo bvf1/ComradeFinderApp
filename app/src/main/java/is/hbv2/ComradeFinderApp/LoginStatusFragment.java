@@ -103,14 +103,16 @@ public class LoginStatusFragment extends Fragment {
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: Handle logout
+
+                    setLoggedUser("");
+                    mLogButton.setText(R.string.login_text);
+
                 }
             });
         } else {
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // login redirect
                     mCallbacks.login();
                 }
             });

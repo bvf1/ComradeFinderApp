@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
+
     private NetworkManager mNetworkManager;
 
     private EditText mUsernameText;
@@ -57,10 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            // User may already be logged in
 
-        }
         setContentView(R.layout.activity_login);
 
         initializeUsers();
@@ -79,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 disableControls();
-
 
                 String username = mUsernameText.getText().toString();
                 String password = mPasswordText.getText().toString();
@@ -127,6 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                 });
                 return;
             }
+
+
             Log.d(TAG, "run: Not empty login:" + this.username);
             mNetworkManager.login(this.username, this.password, new NetworkCallback<Account>() {
                 @Override
@@ -140,10 +139,11 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, "run: Class type: " + result.getClass());
                     savedInstanceState.putString("loggedUser", result.getUsername());
 
-                    // TODO: Then we need to redirect back from LoginActivity.
-                    // Go to homepage
-                    //Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    //startActivity(i);
+                    // return to home activity
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    i.putExtra("user", "me");
+                    setResult(RESULT_OK,i);
+                    finish();
                 }
 
                 @Override
@@ -154,10 +154,23 @@ public class LoginActivity extends AppCompatActivity {
                             enableControls(R.string.incorrect_login);
                         }
                     });
+
                     return;
                 }
             });
             Log.d(TAG, "Login thread finished");
+            if (savedInstanceState != null) {
+                savedInstanceState.putString("a", "me");
+
+                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(i);
+
+            }
+
+
+            else {
+                Log.d("why", "is null");
+            }
         }
     }
 
