@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mUsernameText;
     private EditText mPasswordText;
     private Button mLoginButton;
+    private Button mRegisterButton;
     private ProgressBar mLoading;
     private TextView mWrongLoginText;
 
@@ -72,6 +73,14 @@ public class LoginActivity extends AppCompatActivity {
         mWrongLoginText = (TextView) findViewById(R.id.incorrectLoginText);
 
         // Setup login
+        mRegisterButton = (Button) findViewById(R.id.register_button);
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
+            }
+        });
         mLoginButton = (Button) findViewById(R.id.login_button);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                         enableControls(R.string.incorrect_login);
                         return;
                     }
-                    Log.d(TAG, "run: Success. User logged in: " + result.getUsername());
+                   // Log.d(TAG, "run: Success. User logged in: " + result.getUsername());
                     Log.d(TAG, "run: Class type: " + result.getClass());
                     Log.d(TAG, "Object result contains: " + result.toString());
                     Log.d(TAG, "Object result class: " + result.getClass());
@@ -160,10 +169,9 @@ public class LoginActivity extends AppCompatActivity {
                         //savedInstanceState.putString("loggedUser", user.getUsername());
                         i.putExtra("user", user.getUsername());
                     }
->>>>>>> refs/remotes/origin/main
 
                     // return to home activity
-                    //i.putExtra("user", "me");
+                    setResult(RESULT_OK,i);
                     setResult(RESULT_OK,i);
                     finish();
                 }

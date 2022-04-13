@@ -2,6 +2,7 @@ package is.hbv2.ComradeFinderApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -126,10 +127,9 @@ public class RegisterActivity extends AppCompatActivity {
                     // Registration complete
                     Log.d(TAG, "run: Success. User created");
 
-                    // TODO: Then we redirect back from RegisterActivity. Maybe straight to login.
-
-                    //Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    //startActivity(i);
+                    // Goes back to login
+                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(i);
                 }
 
                 @Override
@@ -137,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            enableControls(R.string.incorrect_login);
+                            enableControls(R.string.register_error);
                             Log.e(TAG, errorString);
                         }
                     });
