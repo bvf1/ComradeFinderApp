@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import is.hbv2.ComradeFinderApp.Entities.Account;
+import is.hbv2.ComradeFinderApp.Entities.Company;
 import is.hbv2.ComradeFinderApp.Entities.User;
 import is.hbv2.ComradeFinderApp.Network.NetworkCallback;
 import is.hbv2.ComradeFinderApp.Network.NetworkManager;
@@ -127,20 +128,42 @@ public class LoginActivity extends AppCompatActivity {
 
 
             Log.d(TAG, "run: Not empty login:" + this.username);
-            mNetworkManager.login(this.username, this.password, new NetworkCallback<Account>() {
+            mNetworkManager.login(this.username, this.password, new NetworkCallback<Object>() {
                 @Override
-                public void onSuccess(Account result) {
-                    // TODO: We have confirmed login. Now we need to apply this login.
+                public void onSuccess(Object result) {
                     if (result == null) {
                         enableControls(R.string.incorrect_login);
                         return;
                     }
                     Log.d(TAG, "run: Success. User logged in: " + result.getUsername());
                     Log.d(TAG, "run: Class type: " + result.getClass());
+                    Log.d(TAG, "Object result contains: " + result.toString());
+                    Log.d(TAG, "Object result class: " + result.getClass());
+
+                    User user;
+                    Company company;
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    // I started LoginActivity and logged in got an error.
+                    // savedInstanceState was null.
+                    // TODO: fix or work our way around this. Maybe this only happens when you start at login?
+                    if (result.getClass().equals(Company.class)) {
+                        company = (Company) result;
+                        Log.d(TAG, "run: Success. User logged in: " + company.getUsername());
+                        Log.d(TAG, "run: Class type: " + company.getClass());
+                        //savedInstanceState.putString("loggedUser", company.getUsername());
+                        i.putExtra("user", company.getUsername());
+                    }
+                    if (result.getClass().equals(User.class)) {
+                        user = (User) result;
+                        Log.d(TAG, "run: Success. User logged in: " + user.getUsername());
+                        Log.d(TAG, "run: Class type: " + user.getClass());
+                        //savedInstanceState.putString("loggedUser", user.getUsername());
+                        i.putExtra("user", user.getUsername());
+                    }
+>>>>>>> refs/remotes/origin/main
 
                     // return to home activity
-                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    i.putExtra("user", "me");
+                    //i.putExtra("user", "me");
                     setResult(RESULT_OK,i);
                     finish();
                 }
