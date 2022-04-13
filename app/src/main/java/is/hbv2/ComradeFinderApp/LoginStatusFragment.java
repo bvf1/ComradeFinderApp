@@ -56,6 +56,7 @@ public class LoginStatusFragment extends Fragment {
     public interface Callbacks {
       //  void onLogOut();
         void login();
+        void register();
     }
 
     @Override
@@ -96,6 +97,12 @@ public class LoginStatusFragment extends Fragment {
     public void setLoggedUser(String user) {
         mLogButton = (Button) mThisView.findViewById(R.id.buttonLogin);
         mRegisterButton = (Button) mThisView.findViewById(R.id.buttonRegister);
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCallbacks.register();
+            }
+        });
         mLoginText = (TextView) mThisView.findViewById(R.id.textViewSignedUser);
         if (user != "" && user != null) {
             mLoggedUser = user;

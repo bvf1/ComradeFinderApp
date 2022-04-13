@@ -115,7 +115,10 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
          resultLauncher.launch(i);
       //  someActivityResultLauncher.launch(i);
 
+    }
 
-
+    public void register() {
+        Intent i = new Intent(HomeActivity.this, RegisterActivity.class);
+        startActivity(i);
     }
 }
