@@ -70,7 +70,12 @@ public class NetworkManager {
                 Request.Method.GET, BASE_URL + "Login/" + username + "/" + password, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG, "Response");
+                        Log.d(TAG, "Response: " + response);
+                        if (response == null || response.equals("")) {
+                            Log.d(TAG, "Response was null or empty");
+                            callback.onSuccess(null);
+                            return;
+                        }
                         Gson gson = new Gson();
                         //try {
                             Type accType = new TypeToken<User>() {}.getType();
@@ -103,7 +108,6 @@ public class NetworkManager {
         mQueue.add(request);
     }
 
-    // TODO: Finish implementing register
     public void registerUser(String username, String password, String phone, String email, final NetworkCallback<Boolean> callback) {
 
         JSONArray jsonArray = new JSONArray();
