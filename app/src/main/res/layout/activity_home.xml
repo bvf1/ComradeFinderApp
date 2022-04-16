@@ -27,11 +27,15 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/listViewAd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="vertical" />-->
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/adsListView" />
         </ScrollView>
 
     </LinearLayout>

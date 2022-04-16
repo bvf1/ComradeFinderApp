@@ -30,6 +30,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
 
     private String username = "";
     private LinearLayout listViewAd;
+    private ListView listView;
     private ArrayList<Ad> ads = new ArrayList<>();
     ActivityResultLauncher<Intent> resultLauncher;
 
@@ -61,10 +62,42 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
         setContentView(R.layout.activity_home);
 
         createLoginFragment();
-        populateListView();
+        //populateListView();
+
+        setupData();
+        setUpList();
+        setUpOnClickListener();
     }
 
-    public void populateListView() {
+    private void setupData() {
+        Ad testAd1 = new Ad("Title1", "Description1", "1-1", new ArrayList<>(), "Comapny1", "LinkToImage1", new ArrayList<>());
+        Ad testAd2 = new Ad("Title2", "Description2", "2-2", new ArrayList<>(), "Comapny2", "LinkToImage2", new ArrayList<>());
+        Ad testAd3 = new Ad("Title3", "Description3", "3-3", new ArrayList<>(), "Comapny3", "LinkToImage3", new ArrayList<>());
+
+        ads.add(testAd1);
+        ads.add(testAd2);
+        ads.add(testAd3);
+    }
+
+    private void setUpList() {
+        listView = (ListView) findViewById(R.id.adsListView);
+
+        AdsAdapter adsAdapter = new AdsAdapter(getApplicationContext(), 0, ads);
+        listView.setAdapter(adsAdapter);
+    }
+
+    private void setUpOnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Ad selectedAd = (Ad) (listView.getItemAtPosition(position));
+                //Intent showDetail = new Intent(getApplicationContext(), DetailActivity.class);
+            }
+        });
+    }
+
+
+    /*public void populateListView() {
         listViewAd = (LinearLayout) findViewById(R.id.listViewAd);
         ads.add(new Ad("Title1", "Description1", "", new ArrayList<>(), "Comapny1", "LinkToImage1", new ArrayList<>()));
         ads.add(new Ad("Title2", "Description2", "", new ArrayList<>(), "Comapny2", "LinkToImage2", new ArrayList<>()));
@@ -83,7 +116,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                 .add(R.id.listViewAd, ad)
                 .commit();
         //TODO: Bæta við að sýna þessa items í home
-    }
+    }*/
 
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {

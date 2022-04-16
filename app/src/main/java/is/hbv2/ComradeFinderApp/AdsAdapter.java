@@ -30,8 +30,12 @@ public class AdsAdapter extends ArrayAdapter<Ad>
         {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.ads_cell, parent, false);
         }
-        TextView tvName = (TextView) convertView.findViewById(R.id.)
+        TextView adName = (TextView) convertView.findViewById(R.id.adName);
+        TextView adSalary = (TextView) convertView.findViewById(R.id.adSalary);
 
-        return super.getView(position, convertView, parent);
+        adName.setText(ad.getTitle());
+        adSalary.setText(ad.getSalaryRange());
+
+        return convertView;
     }
 }
