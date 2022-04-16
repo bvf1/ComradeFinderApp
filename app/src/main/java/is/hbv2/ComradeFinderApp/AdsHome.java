@@ -41,12 +41,12 @@ public class AdsHome extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param tile Where in the layout this fragment will be placed.
+     * @param salary Salary?
      * @return A new instance of fragment AdsHome.
      */
     // TODO: Rename and change types and number of parameters
-    public static AdsHome newInstance(String tile, List salary) {
+    public static AdsHome newInstance(String tile, String salary) {
         AdsHome fragment = new AdsHome();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, tile);

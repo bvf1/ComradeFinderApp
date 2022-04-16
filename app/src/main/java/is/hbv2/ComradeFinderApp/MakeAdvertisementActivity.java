@@ -22,6 +22,7 @@ import com.google.android.material.slider.RangeSlider;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
@@ -187,9 +188,12 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         }
 
         List<Float> s = mSalary.getValues();
+        String salary = String.format(Locale.getDefault(), "%.2f kr - %.2f kr", s.get(0), s.get(1));
+        /*
         List<String> salary = new ArrayList<String>();
         salary.add(String.format("%,.0f", s.get(0)));
         salary.add(String.format("%,.0f", s.get(1)));
+         */
         mAd = new Ad(
                 title,
                 description,

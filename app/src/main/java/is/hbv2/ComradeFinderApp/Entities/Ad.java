@@ -16,11 +16,11 @@ public class Ad {
     @SerializedName("description")
     private String description;
     @SerializedName("salaryRange")
-    private List<String> salaryRange;
+    private String salaryRange;
     @SerializedName("extraQuestions")
     private List<String> extraQuestions;
-    @SerializedName("company")
-    private String company;
+    @SerializedName("companyUsername")
+    private String companyUsername;
     @SerializedName("linkToPDFImage")
     private String linkToPDFImage;
     @SerializedName("tags")
@@ -33,12 +33,12 @@ public class Ad {
     }
 
 
-    public Ad(String title, String description, List<String> salaryRange, List<String> extraQuestions, String company, String linkToPDFImage, List<String> tags) {
+    public Ad(String title, String description, String salaryRange, List<String> extraQuestions, String companyUsername, String linkToPDFImage, List<String> tags) {
         this.title = title;
         this.description = description;
         this.salaryRange = salaryRange;
         this.extraQuestions = extraQuestions;
-        this.company = company;
+        this.companyUsername = companyUsername;
         this.linkToPDFImage = linkToPDFImage;
         this.tags = tags;
     }
@@ -67,11 +67,11 @@ public class Ad {
         this.description = description;
     }
 
-    public List<String> getSalaryRange() {
+    public String getSalaryRange() {
         return salaryRange;
     }
 
-    public void setSalaryRange(List<String> salaryRange) {
+    public void setSalaryRange(String salaryRange) {
         this.salaryRange = salaryRange;
     }
 
@@ -83,12 +83,12 @@ public class Ad {
         this.extraQuestions = extraQuestions;
     }
 
-    public String getCompany() {
-        return company;
+    public String getCompanyUsername() {
+        return companyUsername;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompanyUsername(String companyUsername) {
+        this.companyUsername = companyUsername;
     }
 
     public String getLinkToPDFImage() {
@@ -123,7 +123,7 @@ public class Ad {
                 ", description=" + description +
                 ", priceRange=" + salaryRange +
                 ", extraQuestions=" + extraQuestions +
-                ", company=" + company +
+                ", company=" + companyUsername +
                 ", linkToPDFImage='" + linkToPDFImage + '\'' +
                 ", applications=" + applications +
                 ", tags=" + tags +

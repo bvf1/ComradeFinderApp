@@ -66,9 +66,9 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
 
     public void populateListView() {
         listViewAd = (LinearLayout) findViewById(R.id.listViewAd);
-        ads.add(new Ad("Title1", "Description1", new ArrayList<>(), new ArrayList<>(), "Comapny1", "LinkToImage1", new ArrayList<>()));
-        ads.add(new Ad("Title2", "Description2", new ArrayList<>(), new ArrayList<>(), "Comapny2", "LinkToImage2", new ArrayList<>()));
-        ads.add(new Ad("Title3", "Description3", new ArrayList<>(), new ArrayList<>(), "Comapny3", "LinkToImage3", new ArrayList<>()));
+        ads.add(new Ad("Title1", "Description1", "", new ArrayList<>(), "Comapny1", "LinkToImage1", new ArrayList<>()));
+        ads.add(new Ad("Title2", "Description2", "", new ArrayList<>(), "Comapny2", "LinkToImage2", new ArrayList<>()));
+        ads.add(new Ad("Title3", "Description3", "", new ArrayList<>(), "Comapny3", "LinkToImage3", new ArrayList<>()));
 
         Ad adObject1 = ads.get(0);
         Ad adObject2 = ads.get(1);
