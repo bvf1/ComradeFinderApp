@@ -1,14 +1,23 @@
 package is.hbv2.ComradeFinderApp.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public abstract class Account {
+    @SerializedName("id")
     protected long ID;
+    @SerializedName("username")
     protected String username;
+    @SerializedName("password")
     protected String password;
+    @SerializedName("phone")
     protected String phone;
+    @SerializedName("email")
     protected String email;
+    @SerializedName("displayName")
     protected String displayName;
+    @SerializedName("description")
     protected String description;
 
     // Abstract class does not initalize

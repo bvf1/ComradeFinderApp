@@ -126,8 +126,8 @@ public class AdvertisementFragment extends Fragment {
             // mCompany.setText(ad.getCompany());
             mTitle.setText("Title: "+ ad.getTitle());
             mDescription.setText("Description: " + ad.getDescription());
-            List<String> salary = ad.getSalaryRange();
-            mSalary.setText("Salary: From " + salary.get(0) + " to " + salary.get(1));
+            String salary = ad.getSalaryRange();
+            mSalary.setText("Salary: " + salary);
             if (ad.getExtraQuestions().isEmpty()) mQuestions.setText("No added questions");
             else mQuestions.setText("Extra Questions: " + ad.getExtraQuestions().toString());
             mPDF.setText(ad.getLinkToPDFImage());

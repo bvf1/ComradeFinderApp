@@ -1,10 +1,16 @@
 package is.hbv2.ComradeFinderApp.Entities;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class Application {
+    @SerializedName("ID")
     private long ID;
+    @SerializedName("user")
     private User user;
+    @SerializedName("ad")
     private Ad ad;
+    @SerializedName("ExtraInfo")
     private String ExtraInfo;
 
     public Application() {}

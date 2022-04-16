@@ -1,5 +1,6 @@
 package is.hbv2.ComradeFinderApp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,8 +53,6 @@ public class MakeApplicationActivity extends FragmentActivity implements Applica
 
 
             getInfoFromForm();
-            /// where do we want to got
-            // put info in backend
         });
     }
 
@@ -135,6 +134,8 @@ public class MakeApplicationActivity extends FragmentActivity implements Applica
         // TODO
         // PUT AD INTO BACKEND
         // GO TO HOMEPAGE?
+        Intent i = new Intent(MakeApplicationActivity.this, HomeActivity.class);
+        startActivity(i);
     }
 
 

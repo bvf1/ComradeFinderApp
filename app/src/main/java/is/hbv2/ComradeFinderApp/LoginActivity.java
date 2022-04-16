@@ -2,6 +2,7 @@ package is.hbv2.ComradeFinderApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,17 +16,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import is.hbv2.ComradeFinderApp.Entities.Account;
+import is.hbv2.ComradeFinderApp.Entities.Company;
 import is.hbv2.ComradeFinderApp.Entities.User;
+import is.hbv2.ComradeFinderApp.Network.NetworkCallback;
+import is.hbv2.ComradeFinderApp.Network.NetworkManager;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
+
+    private NetworkManager mNetworkManager;
+
     private EditText mUsernameText;
     private EditText mPasswordText;
     private Button mLoginButton;
+    private Button mRegisterButton;
     private ProgressBar mLoading;
     private TextView mWrongLoginText;
+
 
     // NOTE: This implementation of keeping users is only being used while testing.
     //       We will change this once we establish access to the backend.
@@ -50,29 +60,33 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            // User may already be logged in
 
-        }
         setContentView(R.layout.activity_login);
 
         initializeUsers();
-
+        mNetworkManager = NetworkManager.getInstance(this);
 
         // Fetch text inputs
         mUsernameText = (EditText) findViewById(R.id.editTextUsername);
         mPasswordText = (EditText) findViewById(R.id.editTextPassword);
-        getLoading();
-        getIncorrectLoginText();
+        mLoading = (ProgressBar) findViewById(R.id.loadingAnimation);
+        mWrongLoginText = (TextView) findViewById(R.id.incorrectLoginText);
 
         // Setup login
+        mRegisterButton = (Button) findViewById(R.id.register_button);
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
+            }
+        });
         mLoginButton = (Button) findViewById(R.id.login_button);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 disableControls();
-
 
                 String username = mUsernameText.getText().toString();
                 String password = mPasswordText.getText().toString();
@@ -97,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
         String username;
         String password;
         Bundle savedInstanceState;
-
         LoginRunnable(String username, String password, Bundle savedInstanceState) {
             this.username = username;
             this.password = password;
@@ -107,14 +120,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void run() {
             // TODO: We might want to add a timer in case the login takes too long
-            // Simulate the time it takes to login
-            Log.d(TAG, "run: thread started run");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.d(TAG, "run: thread finished run");
+            // TODO: Maybe skip login if login request has been sent previously with same info
+            // PERFORM LOGIN OPERATION HERE
 
             if (this.username == null || this.password == null ||
                     this.username.equals("") || this.password.equals("")) {
@@ -125,9 +132,45 @@ public class LoginActivity extends AppCompatActivity {
                         enableControls(R.string.empty_login_error);
                     }
                 });
-            } else {
-                Log.d(TAG, "run: Not empty login:" + this.username);
-                if (!mUserFind.containsKey(this.username)) {
+                return;
+            }
+
+
+            Log.d(TAG, "run: Not empty login:" + this.username);
+            mNetworkManager.login(this.username, this.password, new NetworkCallback<Object>() {
+                @Override
+                public void onSuccess(Object result) {
+                    if (result == null) {
+                        enableControls(R.string.incorrect_login);
+                        return;
+                    }
+                    Log.d(TAG, "run: Class type: " + result.getClass());
+                    Log.d(TAG, "Object result contains: " + result.toString());
+
+                    User user;
+                    Company company;
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    if (result.getClass().equals(Company.class)) {
+                        company = (Company) result;
+                        Log.d(TAG, "run: Success. User logged in: " + company.getUsername());
+                        Log.d(TAG, "run: Class type: " + company.getClass());
+                        i.putExtra("user", company.getUsername());
+                    }
+                    if (result.getClass().equals(User.class)) {
+                        user = (User) result;
+                        Log.d(TAG, "run: Success. User logged in: " + user.getUsername());
+                        Log.d(TAG, "run: Class type: " + user.getClass());
+                        i.putExtra("user", user.getUsername());
+                    }
+
+                    // return to home activity
+                    setResult(RESULT_OK,i);
+                    setResult(RESULT_OK,i);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(String errorString) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -136,28 +179,12 @@ public class LoginActivity extends AppCompatActivity {
                     });
                     return;
                 }
-                int index = mUserFind.get(this.username);
-                User u = mUserData.get(index);
-                if (this.username.equals(u.getUsername()) && this.password.equals(u.getPassword())) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // TODO: We have confirmed login. Now we need to apply this login.
-                            Log.d(TAG, "run: Success. User logged in: " + u.getUsername());
-                        }
-                    });
-                } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            enableControls(R.string.incorrect_login);
-                        }
-                    });
-                }
-            }
+            });
+            Log.d(TAG, "Login thread finished");
         }
     }
-    /**/
+
+
 
     private void disableControls() {
         mWrongLoginText.setText("");
@@ -175,16 +202,4 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton.setEnabled(true);
     }
 
-    private void getIncorrectLoginText() {
-        if (mWrongLoginText == null) {
-            mWrongLoginText = (TextView) findViewById(R.id.incorrectLoginText);
-        }
-    }
-
-    private void getLoading() {
-        if (mLoading == null) {
-            mLoading = (ProgressBar) findViewById(R.id.loadingAnimation);
-        }
-    }
-    /**/
 }

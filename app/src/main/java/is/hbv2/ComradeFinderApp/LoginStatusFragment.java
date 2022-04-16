@@ -1,5 +1,7 @@
 package is.hbv2.ComradeFinderApp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -26,6 +28,7 @@ public class LoginStatusFragment extends Fragment {
     private String mLoggedUser;
     private TextView mLoginText;
     private Button mLogButton;
+    private Button mRegisterButton;
 
     public LoginStatusFragment() {
         // Required empty public constructor
@@ -46,14 +49,26 @@ public class LoginStatusFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    /*
+
     private Callbacks mCallbacks;
 
     // Host activity must implement this
     public interface Callbacks {
-        void onLogOut();
+      //  void onLogOut();
+        void login();
+        void register();
     }
-    /* ==Commented out until I'm sure we need this== */
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,25 +96,47 @@ public class LoginStatusFragment extends Fragment {
     // Pass "" or null to logout.
     public void setLoggedUser(String user) {
         mLogButton = (Button) mThisView.findViewById(R.id.buttonLogin);
+        mRegisterButton = (Button) mThisView.findViewById(R.id.buttonRegister);
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCallbacks.register();
+            }
+        });
+        mLoginText = (TextView) mThisView.findViewById(R.id.textViewSignedUser);
         if (user != "" && user != null) {
             mLoggedUser = user;
-            mLoginText = (TextView) mThisView.findViewById(R.id.textViewSignedUser);
             mLoginText.setText(mLoggedUser);
             Log.d(TAG, "onCreateView: " + mLoggedUser + ".");
             mLogButton.setText(R.string.logout_text);
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: Handle logout
+
+                    setLoggedUser("");
+                    mLogButton.setText(R.string.login_text);
+                    mRegisterButton.setVisibility(View.VISIBLE);
                 }
             });
+            mRegisterButton.setVisibility(View.GONE);
         } else {
+            mLoggedUser = "";
+            mLoginText.setText(R.string.not_logged_text);
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: Handle login redirect
+                    mCallbacks.login();
                 }
             });
+            /* // TODO: Make register redirect to register
+            mRegisterButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mCallbacks.
+                }
+            });
+
+             */
         }
     }
 }

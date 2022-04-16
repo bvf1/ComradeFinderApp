@@ -113,6 +113,22 @@
                 android:visibility="gone"
                 android:importantForAutofill="no" />
 
+            <ProgressBar
+                android:id="@+id/loadingAnimation2"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/incorrectLoginText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/red"
+                android:textSize="20sp" />
+
             <Button
                 android:id="@+id/register_button"
                 android:layout_width="match_parent"
