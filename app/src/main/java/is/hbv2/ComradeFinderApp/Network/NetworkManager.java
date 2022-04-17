@@ -27,6 +27,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.UnaryOperator;
 
 import is.hbv2.ComradeFinderApp.Entities.Account;
 import is.hbv2.ComradeFinderApp.Entities.Ad;
@@ -162,17 +163,24 @@ public class NetworkManager {
     //                                         ADS
     //=============================================================================================
 
-    //TODO: Test createAd properly because I'm sure it will break.
+    //TODO: createAd needs to be tested properly
     public void createAd(String title, String description, String salaryRange, List<String> extraQuestions, String companyUsername, List<String> tags, final NetworkCallback<Boolean> callback) {
+        // 1. PUT INPUT INTO JSONARRAY
+        // Note: My use of ListPacking might change the input data in the context that called this function.
+        // listPacking: Surrounds a string with a ␟ symbol so the backend can unpack it.
+        UnaryOperator<String> listPacking = x -> "␟" + x + "␟";
         JSONArray jsonArray = new JSONArray();
         jsonArray.put(title);
         jsonArray.put(description);
         jsonArray.put(salaryRange);
+        extraQuestions.replaceAll(listPacking);
         jsonArray.put(extraQuestions);
         jsonArray.put(companyUsername);
+        tags.replaceAll(listPacking);
         jsonArray.put(tags);
         final String mRequestBody = jsonArray.toString();
 
+        // 2. DELEGATE REQUEST AND SEND TO BACKEND
         StringRequest request = new StringRequest(
                 Request.Method.POST, BASE_URL + "createAd", new Response.Listener<String>() {
 
