@@ -102,28 +102,6 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
         });
     }
 
-
-    /*public void populateListView() {
-        listViewAd = (LinearLayout) findViewById(R.id.listViewAd);
-        ads.add(new Ad("Title1", "Description1", "", new ArrayList<>(), "Comapny1", "LinkToImage1", new ArrayList<>()));
-        ads.add(new Ad("Title2", "Description2", "", new ArrayList<>(), "Comapny2", "LinkToImage2", new ArrayList<>()));
-        ads.add(new Ad("Title3", "Description3", "", new ArrayList<>(), "Comapny3", "LinkToImage3", new ArrayList<>()));
-
-        Ad adObject1 = ads.get(0);
-        Ad adObject2 = ads.get(1);
-        Ad adObject3 = ads.get(2);
-        Fragment ad = new AdsHome().newInstance(adObject1.getTitle(), adObject1.getSalaryRange());
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
-                .add(R.id.listViewAd, ad)
-                .commit();
-        ad = new AdsHome().newInstance(adObject2.getTitle(), adObject2.getSalaryRange());
-        fm.beginTransaction()
-                .add(R.id.listViewAd, ad)
-                .commit();
-        //TODO: Bæta við að sýna þessa items í home
-    }*/
-
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
         // user is logged in
