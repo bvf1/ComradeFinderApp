@@ -4,31 +4,27 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
 public class HomeActivity extends AppCompatActivity implements LoginStatusFragment.Callbacks {
 
-    private String username = "";
+    private String mUsername = "";
+    private boolean mIsCompany = false;
     private LinearLayout listViewAd;
     private ListView listView;
     public static ArrayList<Ad> ads = new ArrayList<>();
@@ -51,15 +47,19 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                             Intent data = result.getData();
 
                             String user = data.getStringExtra("user");
-                            username = user;
+                            mIsCompany = data.getBooleanExtra("isCompany", false);
+                            mUsername = user;
                             updateLoginFragment();
-                            Log.d("user", username);
+                            Log.d("user", mUsername);
+                            Log.d("isCompany", ""+ mIsCompany);
+                            if (mIsCompany) ((Button) findViewById(R.id.makeAdButton)).setVisibility(View.VISIBLE);
                         }
                     }
                 });
 
 
         setContentView(R.layout.activity_home);
+
 
         createLoginFragment();
         //populateListView();
@@ -105,7 +105,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
         // user is logged in
-        LoginStatusFragment login = new LoginStatusFragment().newInstance(username);
+        LoginStatusFragment login = new LoginStatusFragment().newInstance(mUsername);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.login_fragment_container, login)
@@ -118,7 +118,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
 
         Log.d("update", login.toString());
         if (login != null) {
-            login.setLoggedUser(username);
+            login.setLoggedUser(mUsername);
         }
     }
 

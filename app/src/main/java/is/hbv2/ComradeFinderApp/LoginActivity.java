@@ -37,33 +37,12 @@ public class LoginActivity extends AppCompatActivity {
     private TextView mWrongLoginText;
 
 
-    // NOTE: This implementation of keeping users is only being used while testing.
-    //       We will change this once we establish access to the backend.
-    private static HashMap<String, Integer> mUserFind;
-    private static ArrayList<User> mUserData;
-
-    private void initializeUsers() {
-        mUserFind = new HashMap<>();
-        mUserData = new ArrayList<>();
-
-        User user1 = new User("bvf1", "111", "8888888", "bvf1@hi.is", "Bara", "Bára the BEAST");
-        mUserFind.put(user1.getUsername(), 0);
-        mUserData.add(0, user1);
-        User user2 = new User("gvg8", "222", "8885555", "gvg8@hi.is", "Gisli", "Best Bossman");
-        mUserFind.put(user2.getUsername(), 1);
-        mUserData.add(1, user2);
-        User user3 = new User("jap13", "333", "8882222", "jap13@hi.is", "Jon", "Expert communicator");
-        mUserFind.put(user3.getUsername(), 2);
-        mUserData.add(2, user3);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
 
-        initializeUsers();
         mNetworkManager = NetworkManager.getInstance(this);
 
         // Fetch text inputs
@@ -155,12 +134,14 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "run: Success. User logged in: " + company.getUsername());
                         Log.d(TAG, "run: Class type: " + company.getClass());
                         i.putExtra("user", company.getUsername());
+                        i.putExtra("isCompany", true);
                     }
                     if (result.getClass().equals(User.class)) {
                         user = (User) result;
                         Log.d(TAG, "run: Success. User logged in: " + user.getUsername());
                         Log.d(TAG, "run: Class type: " + user.getClass());
                         i.putExtra("user", user.getUsername());
+                        i.putExtra("isCompany", false);
                     }
 
                     // return to home activity
