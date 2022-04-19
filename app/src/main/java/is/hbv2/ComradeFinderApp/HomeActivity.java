@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     private String username = "";
     private LinearLayout listViewAd;
     private ListView listView;
-    private ArrayList<Ad> ads = new ArrayList<>();
+    public static ArrayList<Ad> ads = new ArrayList<>();
     ActivityResultLauncher<Intent> resultLauncher;
 
 
@@ -91,7 +91,9 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Ad selectedAd = (Ad) (listView.getItemAtPosition(position));
-                //Intent showDetail = new Intent(getApplicationContext(), DetailActivity.class);
+                Intent showDetail = new Intent(getApplicationContext(), DetailAdActivity.class);
+                showDetail.putExtra("id",selectedAd.getID());
+                startActivity(showDetail);
             }
         });
     }
