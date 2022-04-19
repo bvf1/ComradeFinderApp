@@ -64,7 +64,12 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = mEmailText.getText().toString();
 
                 if (mCompanySwitch.isChecked()) {
-                    // TODO: Register company instead of user
+                    // Register company instead if switch is active
+                    String companyName = mCompanyNameText.getText().toString();
+                    String SSN = mSSNText.getText().toString();
+                    RegisterActivity.RegisterCompanyRunnable registerRunnable = new RegisterActivity.RegisterCompanyRunnable(username, password, phone, email, companyName, SSN, savedInstanceState);
+                    Thread t = new Thread(new ThreadGroup("registerUser"), registerRunnable);
+                    t.start();
                     return;
                 }
 
@@ -89,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    // Thread used to login.
+    // Thread used to register User.
     class RegisterUserRunnable implements Runnable {
         String username;
         String password;
@@ -111,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (this.username == null || this.password == null ||
                     this.username.equals("") || this.password.equals("")) {
-                Log.d(TAG, "run: Empty login");
+                Log.d(TAG, "run: Empty registry");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -122,6 +127,70 @@ public class RegisterActivity extends AppCompatActivity {
             }
             Log.d(TAG, "run: Not empty login:" + this.username);
             mNetworkManager.registerUser(this.username, this.password, this.phone, this.email, new NetworkCallback<Boolean>() {
+                @Override
+                public void onSuccess(Boolean result) {
+                    // Registration complete
+                    Log.d(TAG, "run: Success. User created");
+
+                    // Goes back to login
+                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(i);
+                }
+
+                @Override
+                public void onFailure(String errorString) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            enableControls(R.string.register_error);
+                            Log.e(TAG, errorString);
+                        }
+                    });
+                    return;
+                }
+            });
+            /* == Register isn't implemented network side yet. == */
+            Log.d(TAG, "Login thread finished");
+        }
+    }
+
+    // Thread used to register Company
+    class RegisterCompanyRunnable implements Runnable {
+        String username;
+        String password;
+        String phone;
+        String email;
+        String companyName;
+        String SSN;
+        Bundle savedInstanceState;
+        RegisterCompanyRunnable(String username, String password, String phone, String email, String companyName, String SSN, Bundle savedInstanceState) {
+            this.username = username;
+            this.password = password;
+            this.phone = phone;
+            this.email = email;
+            this.companyName = companyName;
+            this.SSN = SSN;
+            this.savedInstanceState = savedInstanceState;
+        }
+
+        @Override
+        public void run() {
+            // TODO: We might want to add a timer in case the register takes too long
+            // PERFORM LOGIN OPERATION HERE
+
+            if (this.username == null || this.password == null ||
+                    this.username.equals("") || this.password.equals("")) {
+                Log.d(TAG, "run: Empty registry");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        enableControls(R.string.empty_register_error);
+                    }
+                });
+                return;
+            }
+            Log.d(TAG, "run: Not empty login:" + this.username);
+            mNetworkManager.registerCompany(this.username, this.password, this.phone, this.email, this.companyName, this.SSN, new NetworkCallback<Boolean>() {
                 @Override
                 public void onSuccess(Boolean result) {
                     // Registration complete

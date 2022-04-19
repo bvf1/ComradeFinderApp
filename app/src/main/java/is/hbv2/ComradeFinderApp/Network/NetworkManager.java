@@ -158,6 +158,51 @@ public class NetworkManager {
         mQueue.add(request);
     }
 
+    public void registerCompany(String username, String password, String phone, String email, String companyName, String SSN, final NetworkCallback<Boolean> callback) {
+
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(username);
+        jsonArray.put(password);
+        jsonArray.put(phone);
+        jsonArray.put(email);
+        jsonArray.put(companyName);
+        jsonArray.put(SSN);
+        final String mRequestBody = jsonArray.toString();
+
+        StringRequest request = new StringRequest(
+                Request.Method.POST, BASE_URL + "registerCompany", new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "User created with response: " + response);
+                callback.onSuccess(true);
+            }
+        },  new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error");
+                callback.onFailure(error.toString());
+            }
+        }){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+            /**/
+        };
+        mQueue.add(request);
+    }
+
 
     //=============================================================================================
     //                                         ADS
