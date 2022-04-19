@@ -74,6 +74,10 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
         Ad testAd2 = new Ad("Title2", "Description2", "2-2", new ArrayList<>(), "Comapny2", "LinkToImage2", new ArrayList<>());
         Ad testAd3 = new Ad("Title3", "Description3", "3-3", new ArrayList<>(), "Comapny3", "LinkToImage3", new ArrayList<>());
 
+        testAd1.setID(0);
+        testAd2.setID(1);
+        testAd3.setID(2);
+
         ads.add(testAd1);
         ads.add(testAd2);
         ads.add(testAd3);

@@ -22,8 +22,8 @@ public class DetailAdActivity extends AppCompatActivity {
 
     private void getSlecetedAd() {
         Intent previousIntent = getIntent();
-        String parsedStringID = previousIntent.getStringExtra("id");
-        selectedAd = HomeActivity.ads.get(Integer.valueOf(parsedStringID));
+        Long parsedStringID = previousIntent.getLongExtra("id", 0);
+        selectedAd = HomeActivity.ads.get(Math.toIntExact((parsedStringID)));
     }
 
     private void setValues() {

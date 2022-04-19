@@ -19,6 +19,9 @@
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
+            android:name=".DetailAdActivity"
+            android:exported="true" />
+        <activity
             android:name=".MakeApplicationActivity"
             android:exported="true" />
         <activity
