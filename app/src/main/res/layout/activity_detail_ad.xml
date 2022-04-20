@@ -12,58 +12,94 @@
         android:layout_height="60dp"
         android:gravity="top"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteY="262dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="670dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/adName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="center_vertical"
-            android:text="@string/ads_home_title"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/adSalaryTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/priceRange_label"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/adSalary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:gravity="center_vertical"
-            android:text="@string/ads_home_salary"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/descriptionTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/description_label"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/adDescriptionHome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:text="@string/description_label"
-            android:textSize="15dp" />
+        tools:layout_editor_absoluteY="262dp" >
 
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="670dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/adCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/name_of_company_text"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/adName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/ads_home_title"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/adSalaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/priceRange_label"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/adSalary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/ads_home_salary"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/description_label"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/adDescriptionHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:text="@string/description_label"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/adsDetailTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/adQuestion_text_label"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/adsDetailListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/makeApplicationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:text="@string/create_application_text" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

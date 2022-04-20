@@ -42,9 +42,12 @@
     <string name="registerApp_button">Register Application</string>
     <string name="extraQuestions">Extra Questions You Want To Add</string>
     <string name="adQuestion_button">Add</string>
+    <string name="adQuestion_label">Question</string>
+    <string name="adQuestion_text_label">Questions</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="addTags">"Tags "</string>
     <string name="goBack">Back</string>
     <string name="create_advertisement_text">Create advertisement</string>
+    <string name="create_application_text">Apply</string>
 </resources>

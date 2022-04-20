@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import is.hbv2.ComradeFinderApp.Entities.Ad;
 public class DetailAdActivity extends AppCompatActivity {
 
     Ad selectedAd;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +35,27 @@ public class DetailAdActivity extends AppCompatActivity {
     }
 
     private void setValues() {
+        //TODO: taka test og setja alvöru questions
+        List<String> test = new ArrayList<>();
+        test.add("banana?");
+        test.add("is jon?");
+
         TextView adName = (TextView) findViewById(R.id.adName);
         TextView adSalary = (TextView) findViewById(R.id.adSalary);
+        TextView adDesc = (TextView) findViewById(R.id.adDescriptionHome);
+        TextView adComp = (TextView) findViewById(R.id.adCompany);
+
+        listView = (ListView) findViewById(R.id.adsDetailListView);
+        //TODO: Breyta test í eitthvað almennilegt
+        AdsDetailAdapter adsDetailAdapter = new AdsDetailAdapter(getApplicationContext(), 0, test);
+        listView.setAdapter(adsDetailAdapter);
 
         adName.setText(selectedAd.getTitle());
         adSalary.setText(selectedAd.getSalaryRange());
+        adDesc.setText(selectedAd.getDescription());
+        adComp.setText(selectedAd.getCompanyUsername());
+
+
     }
 
     private List<Ad> dummyAds() {
