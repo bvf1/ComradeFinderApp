@@ -177,6 +177,21 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <ProgressBar
+                    android:id="@+id/loadingAnimationAdCreate"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/incorrectAdCreateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:gravity="center" />
+
                 <Button
                     android:id="@+id/registerAd_button"
                     android:layout_width="wrap_content"

@@ -29,7 +29,6 @@ import is.hbv2.ComradeFinderApp.Network.NetworkManager;
 public class HomeActivity extends AppCompatActivity implements LoginStatusFragment.Callbacks {
 
     private static final String TAG = "HomeActivity";
-
     private NetworkManager mNetworkManager;
 
     private String mUsername = "";
@@ -154,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                     Log.d("click","yes");
 
                     Intent i = new Intent(HomeActivity.this, MakeAdvertisementActivity.class);
-                    i.putExtra("company", mUsername);
+                    i.putExtra("username", mUsername);
                     startActivity(i);
                 }
             });

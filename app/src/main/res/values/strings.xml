@@ -24,6 +24,7 @@
     <string name="ads_home_salary">Salary Range</string>
 
     <string name="makeAd_headline">Make an Advertisement</string>
+    <string name="ad_create_failed_text">Failed to create ad. Please try again</string>
     <string name="home_headline">Home Page</string>
     <string name="title_label">Title</string>
     <string name="priceRange_label">Salary Range</string>

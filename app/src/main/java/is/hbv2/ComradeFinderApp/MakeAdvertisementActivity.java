@@ -1,23 +1,24 @@
 package is.hbv2.ComradeFinderApp;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,14 +26,17 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.slider.RangeSlider;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
+import is.hbv2.ComradeFinderApp.Network.NetworkCallback;
+import is.hbv2.ComradeFinderApp.Network.NetworkManager;
 
 public class MakeAdvertisementActivity extends FragmentActivity implements AdvertisementFragment.Callbacks, LoginStatusFragment.Callbacks { //implements View.OnClickListener, AcceptAdvertisementFragment. {DialogListener {
 
+    private static final String TAG = "MakeAdvertisementActivity";
+    private NetworkManager mNetworkManager;
 
     private Button mAdButton;
     private Button mAddQuestionButton;
@@ -48,8 +52,10 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
     private ListView mQuestionsView;
     private ListView mAddedTagsView;
     private Spinner mTags;
-    private String company;
+    private String mCompany;
     private Ad mAd;
+    private ProgressBar mLoading;
+    private TextView mErrorText;
     ActivityResultLauncher<Intent> resultLauncher;
 
 
@@ -59,7 +65,12 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_advertisement);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        mNetworkManager = NetworkManager.getInstance(this);
         mMakeAdvertisement = findViewById(R.id.MakeAdvertisement);
+        mLoading = findViewById(R.id.loadingAnimationAdCreate);
+        mErrorText = findViewById(R.id.incorrectAdCreateText);
 
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -70,8 +81,8 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
 
                         if (intent != null) {
                             Intent data = result.getData();
-                            String user = data.getStringExtra("user");
-                            company = user;
+                            String user = data.getStringExtra("username");
+                            mCompany = user;
                         }
                     }
                 }
@@ -223,7 +234,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
                 description,
                 salary,
                 questions,
-                company,
+                mCompany,
                 "Empty for now",
                 addedTags
         );
@@ -233,11 +244,24 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
 
     public void acceptAd() {
         Log.d("accept Ad", "acceptAd");
-        // TODO
-        // PUT AD INTO BACKEND
-        // GO TO HOMEPAGE?
-        Intent i = new Intent(MakeAdvertisementActivity.this, HomeActivity.class);
-        startActivity(i);
+        mNetworkManager.createAd(mAd.getTitle(), mAd.getDescription(), mAd.getSalaryRange(), mAd.getExtraQuestions(), mAd.getCompanyUsername(), mAd.getTags(), new NetworkCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                Intent i = new Intent(MakeAdvertisementActivity.this, HomeActivity.class);
+                startActivity(i);
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //enableControls(R.string.ad_create_failed_text);
+                    }
+                });
+            }
+        });
+
 
     }
     // Puts LoginStatus fragment in login_fragment_container
@@ -262,5 +286,31 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
     public void logout() {
         Intent i = new Intent(MakeAdvertisementActivity.this, HomeActivity.class);
         startActivity(i);
+    }
+
+    private void disableControls() {
+        mErrorText.setText("");
+        mLoading.setVisibility(View.VISIBLE);
+        mTitle.setEnabled(false);
+        mDescription.setEnabled(false);
+        mSalary.setEnabled(false);
+        mTags.setEnabled(false);
+        mMakeAdvertisement.setEnabled(false);
+        mAdButton.setEnabled(false);
+        mAddQuestionButton.setEnabled(false);
+        mAddTagsButton.setEnabled(false);
+    }
+
+    private void enableControls(int stringID) {
+        mErrorText.setText(stringID);
+        mLoading.setVisibility(View.GONE);
+        mTitle.setEnabled(true);
+        mDescription.setEnabled(true);
+        mSalary.setEnabled(true);
+        mTags.setEnabled(true);
+        mMakeAdvertisement.setEnabled(true);
+        mAdButton.setEnabled(true);
+        mAddQuestionButton.setEnabled(true);
+        mAddTagsButton.setEnabled(true);
     }
 }
