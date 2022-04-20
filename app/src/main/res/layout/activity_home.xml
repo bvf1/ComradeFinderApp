@@ -28,8 +28,8 @@
         <Button
             android:id="@+id/makeAdButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:layout_height="0dp"
+            android:visibility="invisible"
             android:text="@string/create_advertisement_text" />
 
         <ListView

@@ -133,23 +133,30 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     Log.d(TAG, "run: Class type: " + result.getClass());
                     Log.d(TAG, "Object result contains: " + result.toString());
+                    //Log.d(TAG, "CompanyPhone: " + ((Company) result).getCompanyPhone());
 
                     User user;
                     Company company;
                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    if (result.getClass().equals(Company.class)) {
-                        company = (Company) result;
-                        Log.d(TAG, "run: Success. User logged in: " + company.getUsername());
-                        Log.d(TAG, "run: Class type: " + company.getClass());
-                        i.putExtra("user", company.getUsername());
-                        i.putExtra("isCompany", true);
+                    try {
+                        if (((Company) result).getCompanyPhone() != null) {
+                            company = (Company) result;
+                            Log.d(TAG, "run: Success. User logged in: " + company.getUsername());
+                            Log.d(TAG, "run: Class type: " + company.getClass());
+                            i.putExtra("user", company.getUsername());
+                            i.putExtra("isCompany", true);
+                        }
+                    } catch (Exception e) {
+                        Log.d(TAG, "Login not of type Company. Got error: " + e.toString());
                     }
-                    if (result.getClass().equals(User.class)) {
+                    try {
                         user = (User) result;
                         Log.d(TAG, "run: Success. User logged in: " + user.getUsername());
                         Log.d(TAG, "run: Class type: " + user.getClass());
                         i.putExtra("user", user.getUsername());
                         i.putExtra("isCompany", false);
+                    } catch (Exception e) {
+                        Log.d(TAG, "Login not of type User. Got error: " + e.toString());
                     }
 
                     // return to home activity

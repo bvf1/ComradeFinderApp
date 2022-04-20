@@ -85,6 +85,18 @@ public class NetworkManager {
                         }
                         Gson gson = new Gson();
                         try {
+                            Type accType = new TypeToken<Company>() {}.getType();
+                            Log.d(TAG, "accType: " + accType.toString());
+                            Log.d(TAG, "gson: " + gson.fromJson(response, accType).toString());
+                            Company account = gson.fromJson(response, accType);
+                            if (account.getCompanyPhone() != null) {
+                                callback.onSuccess(account);
+                                return;
+                            }
+                        } catch(Exception e) {
+                            Log.d(TAG, "Login is not of type Company either.");
+                        }/**/
+                        try {
                             Type accType = new TypeToken<User>() {}.getType();
                             Log.d(TAG, "accType: " + accType.toString());
                             Log.d(TAG, "gson: " + gson.fromJson(response, accType).toString());
@@ -92,17 +104,9 @@ public class NetworkManager {
                             callback.onSuccess(account);
                             return;
                         } catch(Exception e) {
-                            Log.d(TAG, "Login is not of type User. Trying Company");
+                            Log.d(TAG, "Login is not of type User. Trying Company. Got error: " + e.toString());
                         }/**/
-                        try {
-                            Type accType = new TypeToken<Company>() {}.getType();
-                            Log.d(TAG, "accType: " + accType.toString());
-                            Log.d(TAG, "gson: " + gson.fromJson(response, accType).toString());
-                            Company account = gson.fromJson(response, accType);
-                            callback.onSuccess(account);
-                        } catch(Exception e) {
-                            Log.d(TAG, "Login is not of type Company either.");
-                        }/**/
+
                     }
         }, new Response.ErrorListener() {
                     @Override

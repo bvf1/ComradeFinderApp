@@ -28,7 +28,6 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     private LinearLayout listViewAd;
     private ListView listView;
     private Button mMakeAd;
-    private Boolean mShowMakeAdButton = false;
     public static ArrayList<Ad> ads = new ArrayList<>();
     ActivityResultLauncher<Intent> resultLauncher;
 
@@ -48,29 +47,14 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                         if (intent != null) {
                             Intent data = result.getData();
 
-                            String user = data.getStringExtra("user");
+                            mUsername = data.getStringExtra("user");
                             mIsCompany = data.getBooleanExtra("isCompany", false);
-                            mUsername = user;
                             updateLoginFragment();
                             Log.d("user", mUsername);
                             Log.d("isCompany", ""+ mIsCompany);
                             if (mIsCompany) {
-                                mShowMakeAdButton = true;
-                                ((Button) findViewById(R.id.makeAdButton)).setVisibility(View.VISIBLE);
-                                mMakeAd = findViewById(R.id.makeAdButton);
-
-                                mMakeAd.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Log.d("click","yes");
-
-                                        Intent i = new Intent(HomeActivity.this, MakeAdvertisementActivity.class);
-                                        i.putExtra("company", user);
-                                        startActivity(i);
-                                    }
-                                });
+                                updateAdCreateButton(mIsCompany);
                             }
-                            else mShowMakeAdButton = false;
                         }
                     }
                 });
@@ -78,17 +62,8 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
 
         mMakeAd = findViewById(R.id.makeAdButton);
         Log.d("here","here");
-        if (mShowMakeAdButton == true) {
-
-        mMakeAd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("click","yes");
-
-                Intent i = new Intent(HomeActivity.this, MakeAdvertisementActivity.class);
-                startActivity(i);
-            }
-        });
+        if (mIsCompany) {
+            updateAdCreateButton(mIsCompany);
         }
 
 
@@ -157,6 +132,29 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
         }
     }
 
+    private void updateAdCreateButton(boolean isCompany) {
+        mMakeAd = findViewById(R.id.makeAdButton);
+        if (isCompany) {
+            mMakeAd.setVisibility(View.VISIBLE);
+            LinearLayout.LayoutParams childParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            mMakeAd.setLayoutParams(childParams);
+            mMakeAd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("click","yes");
+
+                    Intent i = new Intent(HomeActivity.this, MakeAdvertisementActivity.class);
+                    i.putExtra("company", mUsername);
+                    startActivity(i);
+                }
+            });
+            return;
+        }
+        mMakeAd.setVisibility(View.INVISIBLE);
+        mMakeAd.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+    }
+
     //
     public void login() {
         Log.d("login", "login in homepage");
@@ -175,5 +173,6 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
 
     public void logout() {
         Log.d("logut", "is in home");
+        updateAdCreateButton(false);
     }
 }
