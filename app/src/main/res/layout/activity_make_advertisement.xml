@@ -104,10 +104,7 @@
                     android:valueFrom="@string/priceStart"
                     android:valueTo="@string/priceEnd"
                     app:labelBehavior="withinBounds"
-                    app:values="@array/initial_range_slider_values"
-                    tools:ignore="SpeakableTextPresentCheck" />
-
-
+                    />
                 <TextView
                     android:id="@+id/extraQuestions"
                     android:layout_width="match_parent"

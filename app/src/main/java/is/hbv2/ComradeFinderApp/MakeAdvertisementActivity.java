@@ -203,6 +203,9 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
     }
 
     private void getInfoFromForm() {
+
+
+
         String title = mTitle.getText().toString();
         if (title.equals("")) { Toast.makeText(getBaseContext(), "Title is Empty", Toast.LENGTH_LONG).show();return; }
         String description = mDescription.getText().toString();
@@ -212,12 +215,9 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         }
 
         List<Float> s = mSalary.getValues();
-        String salary = String.format(Locale.getDefault(), "%.2f kr - %.2f kr", s.get(0), s.get(1));
-        /*
-        List<String> salary = new ArrayList<String>();
-        salary.add(String.format("%,.0f", s.get(0)));
-        salary.add(String.format("%,.0f", s.get(1)));
-         */
+        String salary = String.format(Locale.getDefault(), "%.0f kr", s.get(0));
+        Log.d("salary",salary);
+
         mAd = new Ad(
                 title,
                 description,
