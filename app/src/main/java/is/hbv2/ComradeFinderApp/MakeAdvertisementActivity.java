@@ -71,7 +71,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
                         if (intent != null) {
                             Intent data = result.getData();
                             String user = data.getStringExtra("user");
-                            Log.d("username", user);
+                            company = user;
                         }
                     }
                 }
@@ -223,7 +223,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
                 description,
                 salary,
                 questions,
-                null,
+                company,
                 "Empty for now",
                 addedTags
         );
