@@ -70,6 +70,14 @@ public class LoginActivity extends AppCompatActivity {
                 String username = mUsernameText.getText().toString();
                 String password = mPasswordText.getText().toString();
 
+                /* When login is needed
+                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                i.putExtra("user", "me");
+                i.putExtra("isCompany", true);
+                setResult(RESULT_OK,i);
+                setResult(RESULT_OK,i);
+                finish();*/
+
                 LoginRunnable loginRunnable = new LoginRunnable(username, password, savedInstanceState);
                 Thread t = new Thread(new ThreadGroup("fetchLogin"), loginRunnable);
                 t.start();

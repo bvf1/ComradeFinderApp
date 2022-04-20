@@ -1,6 +1,8 @@
 package is.hbv2.ComradeFinderApp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -56,13 +58,14 @@ public class LoginStatusFragment extends Fragment {
     public interface Callbacks {
       //  void onLogOut();
         void login();
+        void logout();
         void register();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mCallbacks = (Callbacks) context;
+            mCallbacks = (Callbacks) context;
     }
     @Override
     public void onDetach() {
@@ -112,10 +115,44 @@ public class LoginStatusFragment extends Fragment {
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String extra = "";
+                    if (!getActivity().toString().contains("HomeActivity")) extra = " This Will take you to the Home Page";
 
-                    setLoggedUser("");
-                    mLogButton.setText(R.string.login_text);
-                    mRegisterButton.setVisibility(View.VISIBLE);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    builder.setMessage("Are you sure" + extra)
+                            .setTitle("You are about to log out !" + extra);
+
+
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            setLoggedUser("");
+                            mLogButton.setText(R.string.login_text);
+                            mRegisterButton.setVisibility(View.VISIBLE);
+                            mCallbacks.logout();
+
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+
+                    dialog.show();
+
+                    Log.d("lgout", getActivity().toString());
+                    /*
+                    if (getActivity().toString() == "is.hbv2.ComradeFinderApp.MakeAdvertisementActivity@7c27666")
+                        mCallbacks.logout();
+                    else {
+                        setLoggedUser("");
+                        mLogButton.setText(R.string.login_text);
+                        mRegisterButton.setVisibility(View.VISIBLE);
+                    }*/
                 }
             });
             mRegisterButton.setVisibility(View.GONE);

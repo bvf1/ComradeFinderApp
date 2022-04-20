@@ -27,6 +27,8 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     private boolean mIsCompany = false;
     private LinearLayout listViewAd;
     private ListView listView;
+    private Button mMakeAd;
+    private Boolean mShowMakeAdButton = false;
     public static ArrayList<Ad> ads = new ArrayList<>();
     ActivityResultLauncher<Intent> resultLauncher;
 
@@ -52,10 +54,43 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                             updateLoginFragment();
                             Log.d("user", mUsername);
                             Log.d("isCompany", ""+ mIsCompany);
-                            if (mIsCompany) ((Button) findViewById(R.id.makeAdButton)).setVisibility(View.VISIBLE);
+                            if (mIsCompany) {
+                                mShowMakeAdButton = true;
+                                ((Button) findViewById(R.id.makeAdButton)).setVisibility(View.VISIBLE);
+                                mMakeAd = findViewById(R.id.makeAdButton);
+
+                                mMakeAd.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Log.d("click","yes");
+
+                                        Intent i = new Intent(HomeActivity.this, MakeAdvertisementActivity.class);
+                                        i.putExtra("company", user);
+                                        startActivity(i);
+                                    }
+                                });
+                            }
+                            else mShowMakeAdButton = false;
                         }
                     }
                 });
+        Log.d("here","here");
+
+        mMakeAd = findViewById(R.id.makeAdButton);
+        Log.d("here","here");
+        if (mShowMakeAdButton == true) {
+
+        mMakeAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("click","yes");
+
+                Intent i = new Intent(HomeActivity.this, MakeAdvertisementActivity.class);
+                startActivity(i);
+            }
+        });
+        }
+
 
 
         setContentView(R.layout.activity_home);
@@ -130,12 +165,15 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
         //startActivity(i);
         i.setType("String");
          resultLauncher.launch(i);
-      //  someActivityResultLauncher.launch(i);
 
     }
 
     public void register() {
         Intent i = new Intent(HomeActivity.this, RegisterActivity.class);
         startActivity(i);
+    }
+
+    public void logout() {
+        Log.d("logut", "is in home");
     }
 }

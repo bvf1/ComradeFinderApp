@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import is.hbv2.ComradeFinderApp.Entities.Application;
 
-public class MakeApplicationActivity extends FragmentActivity implements ApplicationFragment.Callbacks {
+public class MakeApplicationActivity extends FragmentActivity implements ApplicationFragment.Callbacks, LoginStatusFragment.Callbacks {
 
     private Button mAppButton;
 
@@ -146,5 +146,19 @@ public class MakeApplicationActivity extends FragmentActivity implements Applica
         fm.beginTransaction()
                 .add(R.id.login_fragment_container, login)
                 .commit();
+    }
+
+    public void login() {
+        Log.d("login", "Should not be here");
+
+    }
+
+    public void register() {
+        Log.d("register", "Should not be here");
+    }
+
+    public void logout() {
+        Intent i = new Intent(MakeApplicationActivity.this, HomeActivity.class);
+        startActivity(i);
     }
 }

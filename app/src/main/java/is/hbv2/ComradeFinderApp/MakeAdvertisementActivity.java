@@ -1,5 +1,6 @@
 package is.hbv2.ComradeFinderApp;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -26,7 +31,7 @@ import java.util.Locale;
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
-public class MakeAdvertisementActivity extends FragmentActivity implements AdvertisementFragment.Callbacks { //implements View.OnClickListener, AcceptAdvertisementFragment. {DialogListener {
+public class MakeAdvertisementActivity extends FragmentActivity implements AdvertisementFragment.Callbacks, LoginStatusFragment.Callbacks { //implements View.OnClickListener, AcceptAdvertisementFragment. {DialogListener {
 
 
     private Button mAdButton;
@@ -43,7 +48,10 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
     private ListView mQuestionsView;
     private ListView mAddedTagsView;
     private Spinner mTags;
+    private String company;
     private Ad mAd;
+    ActivityResultLauncher<Intent> resultLauncher;
+
 
 
 
@@ -52,6 +60,22 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_advertisement);
         mMakeAdvertisement = findViewById(R.id.MakeAdvertisement);
+
+        resultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        Intent intent = result.getData();
+
+                        if (intent != null) {
+                            Intent data = result.getData();
+                            String user = data.getStringExtra("user");
+                            Log.d("username", user);
+                        }
+                    }
+                }
+        );
 
         createAdFragment();
         createLoginFragment();
@@ -218,12 +242,25 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
     }
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
-        Fragment login = new LoginStatusFragment();
+        LoginStatusFragment login = new LoginStatusFragment().newInstance("me");
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.login_fragment_container, login)
                 .commit();
     }
 
+    public void login() {
+        Log.d("login", "Should not be here");
 
+    }
+
+    public void register() {
+        Log.d("register", "Should not be here");
+
+    }
+
+    public void logout() {
+        Intent i = new Intent(MakeAdvertisementActivity.this, HomeActivity.class);
+        startActivity(i);
+    }
 }
