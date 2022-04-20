@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -273,8 +274,10 @@ public class NetworkManager {
                 Log.d(TAG, "Response: " + response);
                 Gson gson = new Gson();
                 Type accType = new TypeToken<List<Ad>>() {}.getType();
-                List<Ad> account = gson.fromJson(response, accType);
-                callback.onSuccess(account);
+                List<Ad> ads = gson.fromJson(response, accType);
+                Log.d(TAG, "ads object result: " + ads.toString());
+                //if (ads.isEmpty()) ads = dummyAds();
+                callback.onSuccess(ads);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -285,6 +288,23 @@ public class NetworkManager {
         }
         );
         mQueue.add(request);
+    }
+    // fake ads
+    private List<Ad> dummyAds() {
+        List<Ad> ads = new ArrayList<>();
+
+        Ad testAd1 = new Ad("Title1", "Description1", "1-1", new ArrayList<>(), "Comapny1", "LinkToImage1", new ArrayList<>());
+        Ad testAd2 = new Ad("Title2", "Description2", "2-2", new ArrayList<>(), "Comapny2", "LinkToImage2", new ArrayList<>());
+        Ad testAd3 = new Ad("Title3", "Description3", "3-3", new ArrayList<>(), "Comapny3", "LinkToImage3", new ArrayList<>());
+
+        testAd1.setID(0);
+        testAd2.setID(1);
+        testAd3.setID(2);
+
+        ads.add(testAd1);
+        ads.add(testAd2);
+        ads.add(testAd3);
+        return ads;
     }
 
     public void getAllAdsByCompany(String username, final NetworkCallback<List<Ad>> callback) {

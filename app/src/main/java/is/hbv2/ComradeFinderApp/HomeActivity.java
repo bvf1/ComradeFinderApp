@@ -17,11 +17,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
+import is.hbv2.ComradeFinderApp.Entities.Company;
+import is.hbv2.ComradeFinderApp.Entities.User;
+import is.hbv2.ComradeFinderApp.Network.NetworkCallback;
+import is.hbv2.ComradeFinderApp.Network.NetworkManager;
 
 public class HomeActivity extends AppCompatActivity implements LoginStatusFragment.Callbacks {
+
+    private static final String TAG = "HomeActivity";
+
+    private NetworkManager mNetworkManager;
 
     private String mUsername = "";
     private boolean mIsCompany = false;
@@ -35,6 +44,8 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mNetworkManager = NetworkManager.getInstance(this);
 
         // Gets username from loginfragment
         resultLauncher = registerForActivityResult(
@@ -74,9 +85,8 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
         createLoginFragment();
         //populateListView();
 
-        setupData();
-        setUpList();
-        setUpOnClickListener();
+        startFetchAllAdsAndDisplay();
+
     }
 
     private void setupData() {
@@ -125,8 +135,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     private void updateLoginFragment() {
         FragmentManager fm = getSupportFragmentManager();
         LoginStatusFragment login = (LoginStatusFragment) fm.findFragmentById(R.id.login_fragment_container);
-
-        Log.d("update", login.toString());
+        if (login != null) Log.d("update", login.toString());
         if (login != null) {
             login.setLoggedUser(mUsername);
         }
@@ -174,5 +183,98 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     public void logout() {
         Log.d("logut", "is in home");
         updateAdCreateButton(false);
+    }
+
+    //==============================================================================================
+    //                         THREADS FOR THE NETWORK MANAGER
+    //==============================================================================================
+    private void startFetchAllAdsAndDisplay() {
+        HomeActivity.FetchAllAds fetchAllAds = new HomeActivity.FetchAllAds();
+        Thread t = new Thread(new ThreadGroup("fetchAllAds"), fetchAllAds);
+        t.start();
+    }
+
+    class FetchAllAds implements Runnable {
+        FetchAllAds() {
+        }
+
+        @Override
+        public void run() {
+
+            mNetworkManager.getAllAds(new NetworkCallback<List<Ad>>() {
+                @Override
+                public void onSuccess(List<Ad> result) {
+                    if (result == null) {
+                        Log.d(TAG, "Fetching ads returned null");
+                        return;
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ads.addAll(result);
+                            setUpList();
+                            setUpOnClickListener();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(String errorString) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "Ads Fetched Failure: " + errorString);
+                        }
+                    });
+                }
+            });
+            Log.d(TAG, "Login thread finished");
+        }
+    }
+
+    private void startFetchAllAdsForCompanyAndDisplay(String username) {
+        HomeActivity.FetchAllAdsForCompany fetchAllAdsForCompany = new HomeActivity.FetchAllAdsForCompany(username);
+        Thread t = new Thread(new ThreadGroup("fetchAllAds"), fetchAllAdsForCompany);
+        t.start();
+    }
+
+    class FetchAllAdsForCompany implements Runnable {
+        String companyUsername;
+        FetchAllAdsForCompany(String username) {
+            this.companyUsername = username;
+        }
+
+        @Override
+        public void run() {
+
+            mNetworkManager.getAllAdsByCompany(this.companyUsername, new NetworkCallback<List<Ad>>() {
+                @Override
+                public void onSuccess(List<Ad> result) {
+                    if (result == null) {
+                        Log.d(TAG, "Fetching ads returned null");
+                        return;
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ads.addAll(result);
+                            setUpList();
+                            setUpOnClickListener();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(String errorString) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "Ads Fetched Failure: " + errorString);
+                        }
+                    });
+                }
+            });
+            Log.d(TAG, "Login thread finished");
+        }
     }
 }
