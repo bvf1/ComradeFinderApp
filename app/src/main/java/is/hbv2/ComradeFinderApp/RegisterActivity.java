@@ -133,10 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onSuccess(Boolean result) {
                     // Registration complete
                     Log.d(TAG, "run: Success. User created");
-
-                    // Goes back to login
-                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(i);
+                    finish();
                 }
 
                 @Override
@@ -196,11 +193,8 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Boolean result) {
                     // Registration complete
-                    Log.d(TAG, "run: Success. User created");
-
-                    // Goes back to login
-                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(i);
+                    Log.d(TAG, "run: Success. Company created");
+                    finish();
                 }
 
                 @Override

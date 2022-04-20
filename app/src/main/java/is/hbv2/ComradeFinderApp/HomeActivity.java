@@ -175,6 +175,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     }
 
     public void register() {
+        login();
         Intent i = new Intent(HomeActivity.this, RegisterActivity.class);
         startActivity(i);
     }
