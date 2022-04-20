@@ -118,10 +118,11 @@ public class Ad {
     @NonNull
     @Override
     public String toString() {
-        return
-                "title='" + title + '\'' +
+        return "Ad{" +
+                "id=" + ID +
+                ", title='" + title + '\'' +
                 ", description=" + description +
-                ", priceRange=" + salaryRange +
+                ", salaryRange=" + salaryRange +
                 ", extraQuestions=" + extraQuestions +
                 ", company=" + companyUsername +
                 ", linkToPDFImage='" + linkToPDFImage + '\'' +

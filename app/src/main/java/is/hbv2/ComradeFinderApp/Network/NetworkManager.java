@@ -275,6 +275,9 @@ public class NetworkManager {
                 Gson gson = new Gson();
                 Type accType = new TypeToken<List<Ad>>() {}.getType();
                 List<Ad> ads = gson.fromJson(response, accType);
+                for (int i = 0; i<ads.size(); i++) {
+                    ads.get(i).setID(i);
+                }
                 Log.d(TAG, "ads object result: " + ads.toString());
                 //if (ads.isEmpty()) ads = dummyAds();
                 callback.onSuccess(ads);

@@ -76,30 +76,13 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
             updateAdCreateButton(mIsCompany);
         }
 
-
-
         setContentView(R.layout.activity_home);
-
 
         createLoginFragment();
         //populateListView();
 
         startFetchAllAdsAndDisplay();
 
-    }
-
-    private void setupData() {
-        Ad testAd1 = new Ad("Title1", "Description1", "1-1", new ArrayList<>(), "Comapny1", "LinkToImage1", new ArrayList<>());
-        Ad testAd2 = new Ad("Title2", "Description2", "2-2", new ArrayList<>(), "Comapny2", "LinkToImage2", new ArrayList<>());
-        Ad testAd3 = new Ad("Title3", "Description3", "3-3", new ArrayList<>(), "Comapny3", "LinkToImage3", new ArrayList<>());
-
-        testAd1.setID(0);
-        testAd2.setID(1);
-        testAd3.setID(2);
-
-        ads.add(testAd1);
-        ads.add(testAd2);
-        ads.add(testAd3);
     }
 
     private void setUpList() {
@@ -114,6 +97,8 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Ad selectedAd = (Ad) (listView.getItemAtPosition(position));
+                Log.d(TAG, "Logging out selected ad:" + selectedAd.toString());
+                Log.d(TAG, "Logging out selected ad:" + selectedAd.getID());
                 Intent showDetail = new Intent(getApplicationContext(), DetailAdActivity.class);
                 showDetail.putExtra("id",selectedAd.getID());
                 startActivity(showDetail);
@@ -208,6 +193,9 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                         Log.d(TAG, "Fetching ads returned null");
                         return;
                     }
+                    Log.d(TAG, "Results to String: " + result.toString());
+                    Log.d(TAG, "Results to String: " + result.get(0).getID());
+                    Log.d(TAG, "Results to String: " + result.get(1).getID());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

@@ -71,6 +71,8 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         mMakeAdvertisement = findViewById(R.id.MakeAdvertisement);
         mLoading = findViewById(R.id.loadingAnimationAdCreate);
         mErrorText = findViewById(R.id.incorrectAdCreateText);
+        Intent prevIntent = getIntent();
+        mCompany = prevIntent.getStringExtra("username");
 
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -82,6 +84,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
                         if (intent != null) {
                             Intent data = result.getData();
                             String user = data.getStringExtra("username");
+                            Log.d(TAG, "Checking whether user is null: " + user);
                             mCompany = user;
                         }
                     }

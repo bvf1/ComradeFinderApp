@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
 public class DetailAdActivity extends AppCompatActivity {
+    private final String TAG = "DetailAdActivity";
 
     Ad selectedAd;
     private ListView listView;
@@ -28,6 +30,7 @@ public class DetailAdActivity extends AppCompatActivity {
     private void getSlecetedAd() {
         Intent previousIntent = getIntent();
         Long parsedStringID = previousIntent.getLongExtra("id", 0);
+        Log.d(TAG,"Selected ad ID: "+parsedStringID.toString());
         if (HomeActivity.ads.size() == 0) {
             HomeActivity.ads.addAll(dummyAds());
         }
