@@ -28,6 +28,7 @@ public class LoginStatusFragment extends Fragment {
 
     private View mThisView;
     private String mLoggedUser;
+    private final String LOGGEDUSERKEY = "loggedUser";
     private TextView mLoginText;
     private Button mLogButton;
     private Button mRegisterButton;
@@ -78,8 +79,21 @@ public class LoginStatusFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mLoggedUser = getArguments().getString(ARG_PARAM1);
-
+            Log.d(TAG, "user from onCreate: " + mLoggedUser);
         }
+        if (savedInstanceState != null) {
+            String user = savedInstanceState.getString(LOGGEDUSERKEY);
+            Log.d(TAG, "user from InstanceState: " + user);
+            if (user != null && !user.equals("")) {
+                mLoggedUser = user;
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(LOGGEDUSERKEY, mLoggedUser);
     }
 
     @Override
@@ -87,7 +101,10 @@ public class LoginStatusFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mThisView = inflater.inflate(R.layout.fragment_login_status, container, false);
-
+        if (getArguments() != null) {
+            mLoggedUser = getArguments().getString(ARG_PARAM1);
+            Log.d(TAG, "user from onCreate: " + mLoggedUser);
+        }
         setLoggedUser(mLoggedUser);
 
         return mThisView;
@@ -100,17 +117,11 @@ public class LoginStatusFragment extends Fragment {
     public void setLoggedUser(String user) {
         mLogButton = (Button) mThisView.findViewById(R.id.buttonLogin);
         mRegisterButton = (Button) mThisView.findViewById(R.id.buttonRegister);
-        mRegisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCallbacks.register();
-            }
-        });
         mLoginText = (TextView) mThisView.findViewById(R.id.textViewSignedUser);
-        if (user != "" && user != null) {
+        Log.d(TAG, "onCreateView: " + mLoggedUser + "." + user);
+        if (!user.equals("") && user != null) {
             mLoggedUser = user;
             mLoginText.setText(mLoggedUser);
-            Log.d(TAG, "onCreateView: " + mLoggedUser + ".");
             mLogButton.setText(R.string.logout_text);
             mLogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -145,14 +156,6 @@ public class LoginStatusFragment extends Fragment {
                     dialog.show();
 
                     Log.d("lgout", getActivity().toString());
-                    /*
-                    if (getActivity().toString() == "is.hbv2.ComradeFinderApp.MakeAdvertisementActivity@7c27666")
-                        mCallbacks.logout();
-                    else {
-                        setLoggedUser("");
-                        mLogButton.setText(R.string.login_text);
-                        mRegisterButton.setVisibility(View.VISIBLE);
-                    }*/
                 }
             });
             mRegisterButton.setVisibility(View.GONE);
@@ -165,15 +168,12 @@ public class LoginStatusFragment extends Fragment {
                     mCallbacks.login();
                 }
             });
-            /* // TODO: Make register redirect to register
             mRegisterButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mCallbacks.
+                    mCallbacks.register();
                 }
             });
-
-             */
         }
     }
 }

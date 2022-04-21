@@ -32,10 +32,13 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     private NetworkManager mNetworkManager;
 
     private String mUsername = "";
+    private static final String USERNAMEKEY = "username";
     private boolean mIsCompany = false;
+    private static final String ISCOMPANYKEY = "isCompany";
     private LinearLayout listViewAd;
     private ListView listView;
     private Button mMakeAd;
+    private LoginStatusFragment mLogin;
     public static ArrayList<Ad> ads = new ArrayList<>();
     ActivityResultLauncher<Intent> resultLauncher;
 
@@ -43,6 +46,14 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            String user = savedInstanceState.getString(USERNAMEKEY);
+            if (user != null && !user.equals("")) {
+                mUsername = user;
+                mIsCompany = savedInstanceState.getBoolean(ISCOMPANYKEY);
+            }
+        }
 
         mNetworkManager = NetworkManager.getInstance(this);
 
@@ -79,10 +90,21 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
         setContentView(R.layout.activity_home);
 
         createLoginFragment();
-        //populateListView();
 
-        startFetchAllAdsAndDisplay();
+        if (ads.size() == 0) {
+            startFetchAllAdsAndDisplay();
+        } else {
+            setUpList();
+            setUpOnClickListener();
+        }
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(USERNAMEKEY, mUsername);
+        savedInstanceState.putBoolean(ISCOMPANYKEY, mIsCompany);
     }
 
     private void setUpList() {
@@ -109,19 +131,21 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
         // user is logged in
-        LoginStatusFragment login = new LoginStatusFragment().newInstance(mUsername);
+        mLogin = new LoginStatusFragment().newInstance(mUsername);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
-                .add(R.id.login_fragment_container, login)
+                .add(R.id.login_fragment_container, mLogin)
                 .commit();
     }
 
     private void updateLoginFragment() {
-        FragmentManager fm = getSupportFragmentManager();
-        LoginStatusFragment login = (LoginStatusFragment) fm.findFragmentById(R.id.login_fragment_container);
-        if (login != null) Log.d("update", login.toString());
-        if (login != null) {
-            login.setLoggedUser(mUsername);
+        //FragmentManager fm = getSupportFragmentManager();
+        //LoginStatusFragment mLogin = (LoginStatusFragment) fm.findFragmentById(R.id.login_fragment_container);
+        if (mLogin != null) {
+            Log.d("update LoginFragment", mUsername+mLogin.toString());
+            mLogin.setLoggedUser(mUsername);
+        } else {
+            createLoginFragment();
         }
     }
 
@@ -199,6 +223,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            ads = new ArrayList<>();
                             ads.addAll(result);
                             setUpList();
                             setUpOnClickListener();
