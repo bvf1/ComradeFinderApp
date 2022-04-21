@@ -118,7 +118,14 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
         mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
         mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
         mLoading = (ProgressBar) findViewById(R.id.adsDetailLoadingAnimation);
+        mErrorText.setVisibility(View.GONE);
         mApplyButton.setText(R.string.delete_text);
+        if (!mUsername.equals(selectedAd.getCompanyUsername())) {
+            mApplyButton.setEnabled(false);
+            mApplyButton.setVisibility(View.GONE);
+            return;
+        }
+        mApplyButton.setEnabled(true);
         mApplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,6 +178,8 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
     private void updateNoUser() {
         mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
         mApplyButton.setEnabled(false);
+        mApplyButton.setText(R.string.create_application_text);
+        mApplyButton.setVisibility(View.VISIBLE);
         mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
         mErrorText.setVisibility(View.VISIBLE);
     }
@@ -178,6 +187,8 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
     private void updateIsUser() {
         mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
         mApplyButton.setEnabled(true);
+        mApplyButton.setText(R.string.create_application_text);
+        mApplyButton.setVisibility(View.VISIBLE);
         mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
         mErrorText.setVisibility(View.GONE);
     }
