@@ -1,6 +1,7 @@
 package is.hbv2.ComradeFinderApp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ public class DetailAdActivity extends AppCompatActivity {
     Ad selectedAd;
     private ListView listView;
     private String mUsername;
+    private boolean mIsCompany;
+    private LoginStatusFragment mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +31,14 @@ public class DetailAdActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_ad);
         getSlecetedAd();
         setValues();
+        //createLoginFragment();
     }
 
     private void getSlecetedAd() {
         Intent previousIntent = getIntent();
         Long parsedStringID = previousIntent.getLongExtra("id", 0);
         mUsername = previousIntent.getStringExtra("username");
+        mIsCompany = previousIntent.getBooleanExtra("isCompany", false);
         Log.d(TAG,"Selected ad ID: "+parsedStringID.toString());
         if (HomeActivity.ads.size() == 0) {
             HomeActivity.ads.addAll(dummyAds());
@@ -68,6 +73,10 @@ public class DetailAdActivity extends AppCompatActivity {
             TextView errorText = (TextView) findViewById(R.id.adsDetailUserError);
             errorText.setVisibility(View.VISIBLE);
         }
+        if (mIsCompany) {
+            Button applyButton = (Button) findViewById(R.id.makeApplicationButton);
+            applyButton.setVisibility(View.GONE);
+        }
     }
 
     private List<Ad> dummyAds() {
@@ -85,5 +94,26 @@ public class DetailAdActivity extends AppCompatActivity {
         ads.add(testAd2);
         ads.add(testAd3);
         return ads;
+    }
+
+    // Puts LoginStatus fragment in login_fragment_container
+    private void createLoginFragment() {
+        // user is logged in
+        mLogin = new LoginStatusFragment().newInstance(mUsername);
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .add(R.id.login_fragment_container, mLogin)
+                .commit();
+    }
+
+    private void updateLoginFragment() {
+        //FragmentManager fm = getSupportFragmentManager();
+        //LoginStatusFragment mLogin = (LoginStatusFragment) fm.findFragmentById(R.id.login_fragment_container);
+        if (mLogin != null) {
+            Log.d("update LoginFragment", mUsername+mLogin.toString());
+            mLogin.setLoggedUser(mUsername);
+        } else {
+            createLoginFragment();
+        }
     }
 }
