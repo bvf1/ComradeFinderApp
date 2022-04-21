@@ -55,6 +55,11 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
                             mUsername = data.getStringExtra("user");
                             mIsCompany = data.getBooleanExtra("isCompany", false);
                             updateLoginFragment();
+                            if (mIsCompany) {
+                                updateIsCompany();
+                            } else {
+                                updateIsUser();
+                            }
                             Log.d("user", mUsername);
                             Log.d("isCompany", ""+ mIsCompany);
                         }
@@ -102,49 +107,29 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
         adComp.setText(selectedAd.getCompanyUsername());
 
         if (mUsername == null || mUsername.equals("")) {
-            mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
-            mApplyButton.setEnabled(false);
-            mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
-            mErrorText.setVisibility(View.VISIBLE);
+            updateNoUser();
         }
         if (mIsCompany) {
-            mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
-            mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
-            mLoading = (ProgressBar) findViewById(R.id.adsDetailLoadingAnimation);
-            mApplyButton.setText(R.string.delete_text);
-            mApplyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("click","yes");
-                    mErrorText.setVisibility(View.GONE);
-                    mApplyButton.setEnabled(false);
-                    mLoading.setVisibility(View.VISIBLE);
-                    mNetworkManager.deleteAdByID(selectedAd.getID(), new NetworkCallback<Boolean>() {
-                        @Override
-                        public void onSuccess(Boolean result) {
-                            if (result == null || !result) {
-                                Log.d(TAG, "delete ad failed");
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mErrorText.setText(R.string.deleteFailed_text);
-                                        mErrorText.setVisibility(View.VISIBLE);
-                                        mApplyButton.setEnabled(true);
-                                        mLoading.setVisibility(View.GONE);
-                                    }
-                                });
-                                return;
-                            }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    finish();
-                                }
-                            });
-                        }
+            updateIsCompany();
+        }
+    }
 
-                        @Override
-                        public void onFailure(String errorString) {
+    private void updateIsCompany() {
+        mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
+        mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
+        mLoading = (ProgressBar) findViewById(R.id.adsDetailLoadingAnimation);
+        mApplyButton.setText(R.string.delete_text);
+        mApplyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("click","yes");
+                mErrorText.setVisibility(View.GONE);
+                mApplyButton.setEnabled(false);
+                mLoading.setVisibility(View.VISIBLE);
+                mNetworkManager.deleteAdByID(selectedAd.getID(), new NetworkCallback<Boolean>() {
+                    @Override
+                    public void onSuccess(Boolean result) {
+                        if (result == null || !result) {
                             Log.d(TAG, "delete ad failed");
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -155,11 +140,46 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
                                     mLoading.setVisibility(View.GONE);
                                 }
                             });
+                            return;
                         }
-                    });
-                }
-            });
-        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorString) {
+                        Log.d(TAG, "delete ad failed");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mErrorText.setText(R.string.deleteFailed_text);
+                                mErrorText.setVisibility(View.VISIBLE);
+                                mApplyButton.setEnabled(true);
+                                mLoading.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    private void updateNoUser() {
+        mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
+        mApplyButton.setEnabled(false);
+        mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
+        mErrorText.setVisibility(View.VISIBLE);
+    }
+
+    private void updateIsUser() {
+        mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
+        mApplyButton.setEnabled(true);
+        mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
+        mErrorText.setVisibility(View.GONE);
     }
 
     private List<Ad> dummyAds() {
@@ -208,6 +228,7 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
     }
 
     public void register() {
+        login();
         Intent i = new Intent(DetailAdActivity.this, RegisterActivity.class);
         startActivity(i);
     }
@@ -215,6 +236,7 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
     public void logout() {
         mUsername = "";
         updateLoginFragment();
+        updateNoUser();
     }
 }
 
