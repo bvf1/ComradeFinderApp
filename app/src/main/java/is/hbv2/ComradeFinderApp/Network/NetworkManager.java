@@ -140,7 +140,7 @@ public class NetworkManager {
         },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error");
+                Log.d(TAG, "Error:" + error.toString());
                 callback.onFailure(error.toString());
             }
         }){

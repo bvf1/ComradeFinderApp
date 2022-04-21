@@ -218,8 +218,6 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                         return;
                     }
                     Log.d(TAG, "Results to String: " + result.toString());
-                    Log.d(TAG, "Results to String: " + result.get(0).getID());
-                    Log.d(TAG, "Results to String: " + result.get(1).getID());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
