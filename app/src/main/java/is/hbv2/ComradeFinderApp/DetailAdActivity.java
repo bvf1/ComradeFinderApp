@@ -1,56 +1,78 @@
 package is.hbv2.ComradeFinderApp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
+import is.hbv2.ComradeFinderApp.Network.NetworkCallback;
+import is.hbv2.ComradeFinderApp.Network.NetworkManager;
 
-public class DetailAdActivity extends AppCompatActivity implements LoginStatusFragment.Callbacks {
+public class DetailAdActivity extends AppCompatActivity implements LoginStatusFragment.Callbacks{
     private final String TAG = "DetailAdActivity";
+    private NetworkManager mNetworkManager;
+    ActivityResultLauncher<Intent> resultLauncher;
+
 
     Ad selectedAd;
-    private Button mApplicationButton;
     private ListView listView;
-    private String mUser = "";
-    private boolean isCompany = false;
+    private String mUsername;
+    private boolean mIsCompany;
+    private TextView mErrorText;
+    private Button mApplyButton;
+    private ProgressBar mLoading;
+    private LoginStatusFragment mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_ad);
+        resultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        Intent intent = result.getData();
 
-        Intent previousIntent = getIntent();
-        mUser = previousIntent.getStringExtra("user");
+                        if (intent != null) {
+                            Intent data = result.getData();
 
-        Long parsedStringID = previousIntent.getLongExtra("id", 0);
-        String u = previousIntent.getStringExtra("username");
-       // if (u != null) mUser = u;
-        Log.d("username", ":"+ mUser);
-        Log.d("long", ":"+ parsedStringID);
+                            mUsername = data.getStringExtra("user");
+                            mIsCompany = data.getBooleanExtra("isCompany", false);
+                            updateLoginFragment();
+                            Log.d("user", mUsername);
+                            Log.d("isCompany", ""+ mIsCompany);
+                        }
+                    }
+                });
 
-        createLoginFragment();
 
-        getSlecetedAd(parsedStringID);
+        mNetworkManager = NetworkManager.getInstance(this);
+        getSelectedAd();
         setValues();
-
-        mApplicationButton = findViewById(R.id.makeApplicationButton);
-        mApplicationButton.setOnClickListener(view -> {
-            Intent i = new Intent(DetailAdActivity.this, MakeApplicationActivity.class);
-            startActivity(i);
-        });
+        createLoginFragment();
     }
 
-    private void getSlecetedAd(Long parsedStringID) {
+    private void getSelectedAd() {
+        Intent previousIntent = getIntent();
+        Long parsedStringID = previousIntent.getLongExtra("id", 0);
+        mUsername = previousIntent.getStringExtra("username");
+        mIsCompany = previousIntent.getBooleanExtra("isCompany", false);
         Log.d(TAG,"Selected ad ID: "+parsedStringID.toString());
         if (HomeActivity.ads.size() == 0) {
             HomeActivity.ads.addAll(dummyAds());
@@ -60,9 +82,9 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
 
     private void setValues() {
         //TODO: taka test og setja alvöru questions
-        List<String> test = new ArrayList<>();
-        test.add("banana?");
-        test.add("is jon?");
+        List<String> test = selectedAd.getExtraQuestions();
+        //test.add("banana?");
+        //test.add("is jon?");
 
         TextView adName = (TextView) findViewById(R.id.adName);
         TextView adSalary = (TextView) findViewById(R.id.adSalary);
@@ -79,7 +101,65 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
         adDesc.setText(selectedAd.getDescription());
         adComp.setText(selectedAd.getCompanyUsername());
 
+        if (mUsername == null || mUsername.equals("")) {
+            mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
+            mApplyButton.setEnabled(false);
+            mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
+            mErrorText.setVisibility(View.VISIBLE);
+        }
+        if (mIsCompany) {
+            mApplyButton = (Button) findViewById(R.id.makeApplicationButton);
+            mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
+            mLoading = (ProgressBar) findViewById(R.id.adsDetailLoadingAnimation);
+            mApplyButton.setText(R.string.delete_text);
+            mApplyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("click","yes");
+                    mErrorText.setVisibility(View.GONE);
+                    mApplyButton.setEnabled(false);
+                    mLoading.setVisibility(View.VISIBLE);
+                    mNetworkManager.deleteAdByID(selectedAd.getID(), new NetworkCallback<Boolean>() {
+                        @Override
+                        public void onSuccess(Boolean result) {
+                            if (result == null || !result) {
+                                Log.d(TAG, "delete ad failed");
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mErrorText.setText(R.string.deleteFailed_text);
+                                        mErrorText.setVisibility(View.VISIBLE);
+                                        mApplyButton.setEnabled(true);
+                                        mLoading.setVisibility(View.GONE);
+                                    }
+                                });
+                                return;
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    finish();
+                                }
+                            });
+                        }
 
+                        @Override
+                        public void onFailure(String errorString) {
+                            Log.d(TAG, "delete ad failed");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mErrorText.setText(R.string.deleteFailed_text);
+                                    mErrorText.setVisibility(View.VISIBLE);
+                                    mApplyButton.setEnabled(true);
+                                    mLoading.setVisibility(View.GONE);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     }
 
     private List<Ad> dummyAds() {
@@ -101,24 +181,40 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
 
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
-        Log.d("muser", ""+mUser);
-        LoginStatusFragment login = new LoginStatusFragment().newInstance("mUser");
+        // user is logged in
+        mLogin = new LoginStatusFragment().newInstance(mUsername);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
-                .add(R.id.login_fragment_container, login)
+                .add(R.id.login_fragment_container, mLogin)
                 .commit();
     }
 
+    private void updateLoginFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        LoginStatusFragment mLogin = (LoginStatusFragment) fm.findFragmentById(R.id.login_fragment_container);
+        if (mLogin != null) {
+            Log.d("update LoginFragment", mUsername+mLogin.toString());
+            mLogin.setLoggedUser(mUsername);
+        } else {
+            createLoginFragment();
+        }
+    }
+
     public void login() {
-        Log.d("login", "Should not be here");
+        Intent i = new Intent(DetailAdActivity.this, LoginActivity.class);
+
+        i.setType("String");
+        resultLauncher.launch(i);
     }
 
     public void register() {
-        Log.d("register", "Should not be here");
+        Intent i = new Intent(DetailAdActivity.this, RegisterActivity.class);
+        startActivity(i);
     }
 
     public void logout() {
-        Intent i = new Intent(DetailAdActivity.this, HomeActivity.class);
-        startActivity(i);
+        mUsername = "";
+        updateLoginFragment();
     }
 }
+

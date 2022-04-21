@@ -319,8 +319,13 @@ public class NetworkManager {
                 Log.d(TAG, "Response: " + response);
                 Gson gson = new Gson();
                 Type accType = new TypeToken<List<Ad>>() {}.getType();
-                List<Ad> account = gson.fromJson(response, accType);
-                callback.onSuccess(account);
+                List<Ad> ads = gson.fromJson(response, accType);
+                for (int i = 0; i<ads.size(); i++) {
+                    ads.get(i).setID(i);
+                }
+                Log.d(TAG, "ads object result: " + ads.toString());
+                //if (ads.isEmpty()) ads = dummyAds();
+                callback.onSuccess(ads);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -334,9 +339,9 @@ public class NetworkManager {
     }
 
     public void deleteAdByID(long id, final NetworkCallback<Boolean> callback) {
-        Log.d(TAG, "Fetching all ads by company");
+        Log.d(TAG, "Deleting ad with ID: " + id);
         StringRequest request = new StringRequest(
-                Request.Method.GET, BASE_URL + "deleteAd/" + id, new Response.Listener<String>() {
+                Request.Method.DELETE, BASE_URL + "deleteAd/" + id, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "Response: " + response);

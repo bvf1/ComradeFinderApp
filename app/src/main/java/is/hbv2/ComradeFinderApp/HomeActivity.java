@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                             Log.d("isCompany", ""+ mIsCompany);
                             if (mIsCompany) {
                                 updateAdCreateButton(mIsCompany);
+                                startFetchAllAdsForCompanyAndDisplay(mUsername);
                             }
                         }
                     }
@@ -90,12 +91,20 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
         setContentView(R.layout.activity_home);
 
         createLoginFragment();
-
-        if (ads.size() == 0) {
-            startFetchAllAdsAndDisplay();
+        if (mIsCompany) {
+            if (ads.size() == 0) {
+                startFetchAllAdsForCompanyAndDisplay(mUsername);
+            } else {
+                setUpList();
+                setUpOnClickListener();
+            }
         } else {
-            setUpList();
-            setUpOnClickListener();
+            if (ads.size() == 0) {
+                startFetchAllAdsAndDisplay();
+            } else {
+                setUpList();
+                setUpOnClickListener();
+            }
         }
 
     }
@@ -123,6 +132,8 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                 Log.d(TAG, "Logging out selected ad:" + selectedAd.getID());
                 Intent showDetail = new Intent(getApplicationContext(), DetailAdActivity.class);
                 showDetail.putExtra("id",selectedAd.getID());
+                showDetail.putExtra("username", mUsername);
+                showDetail.putExtra("isCompany", mIsCompany);
                 startActivity(showDetail);
             }
         });
@@ -192,6 +203,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
     public void logout() {
         Log.d("logut", "is in home");
         updateAdCreateButton(false);
+        startFetchAllAdsAndDisplay();
     }
 
     //==============================================================================================
@@ -268,6 +280,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            ads = new ArrayList<>();
                             ads.addAll(result);
                             setUpList();
                             setUpOnClickListener();

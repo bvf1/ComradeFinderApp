@@ -50,4 +50,7 @@
     <string name="goBack">Back</string>
     <string name="create_advertisement_text">Create advertisement</string>
     <string name="create_application_text">Create application</string>
+    <string name="applyError_notLoggedIn">You must be logged in to apply</string>
+    <string name="delete_text">Delete</string>
+    <string name="deleteFailed_text">Failed to delete. Please check your connection and try again</string>
 </resources>
