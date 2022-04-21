@@ -50,4 +50,5 @@
     <string name="goBack">Back</string>
     <string name="create_advertisement_text">Create advertisement</string>
     <string name="create_application_text">Apply</string>
+    <string name="applyError_notLoggedIn">You must be logged in to apply</string>
 </resources>

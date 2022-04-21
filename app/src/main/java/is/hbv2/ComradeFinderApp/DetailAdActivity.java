@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ public class DetailAdActivity extends AppCompatActivity {
 
     Ad selectedAd;
     private ListView listView;
+    private String mUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class DetailAdActivity extends AppCompatActivity {
     private void getSlecetedAd() {
         Intent previousIntent = getIntent();
         Long parsedStringID = previousIntent.getLongExtra("id", 0);
+        mUsername = previousIntent.getStringExtra("username");
         Log.d(TAG,"Selected ad ID: "+parsedStringID.toString());
         if (HomeActivity.ads.size() == 0) {
             HomeActivity.ads.addAll(dummyAds());
@@ -39,9 +43,9 @@ public class DetailAdActivity extends AppCompatActivity {
 
     private void setValues() {
         //TODO: taka test og setja alvöru questions
-        List<String> test = new ArrayList<>();
-        test.add("banana?");
-        test.add("is jon?");
+        List<String> test = selectedAd.getExtraQuestions();
+        //test.add("banana?");
+        //test.add("is jon?");
 
         TextView adName = (TextView) findViewById(R.id.adName);
         TextView adSalary = (TextView) findViewById(R.id.adSalary);
@@ -58,7 +62,12 @@ public class DetailAdActivity extends AppCompatActivity {
         adDesc.setText(selectedAd.getDescription());
         adComp.setText(selectedAd.getCompanyUsername());
 
-
+        if (mUsername == null || mUsername.equals("")) {
+            Button applyButton = (Button) findViewById(R.id.makeApplicationButton);
+            applyButton.setEnabled(false);
+            TextView errorText = (TextView) findViewById(R.id.adsDetailUserError);
+            errorText.setVisibility(View.VISIBLE);
+        }
     }
 
     private List<Ad> dummyAds() {

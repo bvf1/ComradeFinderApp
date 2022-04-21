@@ -91,6 +91,16 @@
                 android:id="@+id/adsDetailListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/adsDetailUserError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/applyError_notLoggedIn"
+                android:textColor="@color/red"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/makeApplicationButton"

@@ -123,6 +123,7 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
                 Log.d(TAG, "Logging out selected ad:" + selectedAd.getID());
                 Intent showDetail = new Intent(getApplicationContext(), DetailAdActivity.class);
                 showDetail.putExtra("id",selectedAd.getID());
+                showDetail.putExtra("username", mUsername);
                 startActivity(showDetail);
             }
         });
