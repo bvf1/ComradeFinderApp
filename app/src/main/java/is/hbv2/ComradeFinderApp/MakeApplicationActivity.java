@@ -38,6 +38,8 @@ public class MakeApplicationActivity extends FragmentActivity implements Applica
         setContentView(R.layout.activity_make_application);
         mMakeApplication = findViewById(R.id.MakeApplication);
 
+        Log.d("here", "here");
+
 
         createAppFragment();
         createLoginFragment();
@@ -141,7 +143,7 @@ public class MakeApplicationActivity extends FragmentActivity implements Applica
 
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
-        Fragment login = new LoginStatusFragment();
+        LoginStatusFragment login = new LoginStatusFragment().newInstance("missing");
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.login_fragment_container, login)

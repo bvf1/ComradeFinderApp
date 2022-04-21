@@ -1,10 +1,12 @@
 package is.hbv2.ComradeFinderApp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,23 +15,42 @@ import java.util.List;
 
 import is.hbv2.ComradeFinderApp.Entities.Ad;
 
-public class DetailAdActivity extends AppCompatActivity {
+public class DetailAdActivity extends AppCompatActivity implements LoginStatusFragment.Callbacks {
     private final String TAG = "DetailAdActivity";
 
     Ad selectedAd;
+    private Button mApplicationButton;
     private ListView listView;
+    private String mUser = "";
+    private boolean isCompany = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_ad);
-        getSlecetedAd();
+
+        Intent previousIntent = getIntent();
+        mUser = previousIntent.getStringExtra("user");
+
+        Long parsedStringID = previousIntent.getLongExtra("id", 0);
+        String u = previousIntent.getStringExtra("username");
+       // if (u != null) mUser = u;
+        Log.d("username", ":"+ mUser);
+        Log.d("long", ":"+ parsedStringID);
+
+        createLoginFragment();
+
+        getSlecetedAd(parsedStringID);
         setValues();
+
+        mApplicationButton = findViewById(R.id.makeApplicationButton);
+        mApplicationButton.setOnClickListener(view -> {
+            Intent i = new Intent(DetailAdActivity.this, MakeApplicationActivity.class);
+            startActivity(i);
+        });
     }
 
-    private void getSlecetedAd() {
-        Intent previousIntent = getIntent();
-        Long parsedStringID = previousIntent.getLongExtra("id", 0);
+    private void getSlecetedAd(Long parsedStringID) {
         Log.d(TAG,"Selected ad ID: "+parsedStringID.toString());
         if (HomeActivity.ads.size() == 0) {
             HomeActivity.ads.addAll(dummyAds());
@@ -76,5 +97,28 @@ public class DetailAdActivity extends AppCompatActivity {
         ads.add(testAd2);
         ads.add(testAd3);
         return ads;
+    }
+
+    // Puts LoginStatus fragment in login_fragment_container
+    private void createLoginFragment() {
+        Log.d("muser", ""+mUser);
+        LoginStatusFragment login = new LoginStatusFragment().newInstance("mUser");
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .add(R.id.login_fragment_container, login)
+                .commit();
+    }
+
+    public void login() {
+        Log.d("login", "Should not be here");
+    }
+
+    public void register() {
+        Log.d("register", "Should not be here");
+    }
+
+    public void logout() {
+        Intent i = new Intent(DetailAdActivity.this, HomeActivity.class);
+        startActivity(i);
     }
 }

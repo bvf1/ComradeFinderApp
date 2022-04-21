@@ -132,7 +132,7 @@ public class LoginStatusFragment extends Fragment {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
                     builder.setMessage("Are you sure" + extra)
-                            .setTitle("You are about to log out !" + extra);
+                            .setTitle("You are about to log out !");
 
 
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

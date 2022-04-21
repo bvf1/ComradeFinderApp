@@ -74,22 +74,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         Intent prevIntent = getIntent();
         mCompany = prevIntent.getStringExtra("username");
 
-        resultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        Intent intent = result.getData();
 
-                        if (intent != null) {
-                            Intent data = result.getData();
-                            String user = data.getStringExtra("username");
-                            Log.d(TAG, "Checking whether user is null: " + user);
-                            mCompany = user;
-                        }
-                    }
-                }
-        );
 
         createAdFragment();
         createLoginFragment();
@@ -269,7 +254,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
     }
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
-        LoginStatusFragment login = new LoginStatusFragment().newInstance("me");
+        LoginStatusFragment login = new LoginStatusFragment().newInstance(mCompany);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.login_fragment_container, login)
@@ -278,12 +263,10 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
 
     public void login() {
         Log.d("login", "Should not be here");
-
     }
 
     public void register() {
         Log.d("register", "Should not be here");
-
     }
 
     public void logout() {
