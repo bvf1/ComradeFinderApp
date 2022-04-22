@@ -56,7 +56,6 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
     private Ad mAd;
     private ProgressBar mLoading;
     private TextView mErrorText;
-    ActivityResultLauncher<Intent> resultLauncher;
 
 
 
@@ -67,6 +66,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
         setContentView(R.layout.activity_make_advertisement);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        Log.d("here","here");
         mNetworkManager = NetworkManager.getInstance(this);
         mMakeAdvertisement = findViewById(R.id.MakeAdvertisement);
         mLoading = findViewById(R.id.loadingAnimationAdCreate);

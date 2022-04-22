@@ -127,7 +127,8 @@ public class LoginStatusFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     String extra = "";
-                    if (!getActivity().toString().contains("HomeActivity")) extra = " This Will take you to the Home Page";
+                    if (!(getActivity().toString().contains("HomeActivity")
+                        || getActivity().toString().contains("DetailAdActivity"))) extra = " This Will take you to the Home Page";
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 

@@ -42,6 +42,12 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_ad);
+
+        Intent prevIntent = getIntent();
+        mUsername = prevIntent.getStringExtra("username");
+        Log.d("user", ""+mUsername);
+
+
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -61,7 +67,7 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
                                 updateIsUser();
                             }
                             Log.d("user", mUsername);
-                            Log.d("isCompany", ""+ mIsCompany);
+                            Log.d("user", "is company"+ mIsCompany);
                         }
                     }
                 });
