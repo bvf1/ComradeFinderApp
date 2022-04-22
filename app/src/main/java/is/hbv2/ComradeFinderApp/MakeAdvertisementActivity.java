@@ -213,8 +213,9 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
             return;
         }
 
+
         List<Float> s = mSalary.getValues();
-        String salary = String.format(Locale.getDefault(), "%.0f kr", s.get(0));
+        String salary = String.format(Locale.getDefault(), "%,.0f kr", s.get(0));
         Log.d("salary",salary);
 
         mAd = new Ad(
