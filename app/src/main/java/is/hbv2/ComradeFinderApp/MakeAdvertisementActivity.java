@@ -112,6 +112,7 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
             questionAdapter.notifyDataSetChanged();
         });
 
+
         // priceRange
         mSalary = findViewById(R.id.priceRange_entry);
         mSalary.setLabelFormatter(value -> {
@@ -135,6 +136,11 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
                 MakeAdvertisementActivity.this,
                 android.R.layout.simple_list_item_1, addedTags);
         mAddedTagsView.setAdapter(addedTagsAdapter);
+
+        mAddedTagsView.setOnItemClickListener((adapterView, view, i, l) -> {
+            addedTags.remove(i);
+            addedTagsAdapter.notifyDataSetChanged();
+        });
 
 
         // add tag to ad
@@ -213,8 +219,9 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
             return;
         }
 
+
         List<Float> s = mSalary.getValues();
-        String salary = String.format(Locale.getDefault(), "%.0f kr", s.get(0));
+        String salary = String.format(Locale.getDefault(), "%,.0f kr", s.get(0));
         Log.d("salary",salary);
 
         mAd = new Ad(
