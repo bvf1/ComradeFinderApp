@@ -198,6 +198,12 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
         mApplyButton.setVisibility(View.VISIBLE);
         mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
         mErrorText.setVisibility(View.GONE);
+        mApplyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: Go to Application Activity
+            }
+        });
     }
 
     private List<Ad> dummyAds() {
