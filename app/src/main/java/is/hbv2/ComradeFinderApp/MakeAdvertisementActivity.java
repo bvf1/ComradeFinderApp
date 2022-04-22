@@ -236,7 +236,12 @@ public class MakeAdvertisementActivity extends FragmentActivity implements Adver
             @Override
             public void onSuccess(Boolean result) {
                 Intent i = new Intent(MakeAdvertisementActivity.this, HomeActivity.class);
-                startActivity(i);
+                i.putExtra("user", mCompany);
+                i.putExtra("isCompany", true);
+
+                setResult(RESULT_OK,i);
+                finish();
+               // startActivity(i);
             }
 
             @Override

@@ -55,6 +55,10 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
             }
         }
 
+        Intent prevIntent = getIntent();
+        String company = prevIntent.getStringExtra("company");
+        if (company != null) Log.d("company", ""+company);
+
         mNetworkManager = NetworkManager.getInstance(this);
 
         // Gets username from loginfragment
@@ -174,7 +178,10 @@ public class HomeActivity extends AppCompatActivity implements LoginStatusFragme
 
                     Intent i = new Intent(HomeActivity.this, MakeAdvertisementActivity.class);
                     i.putExtra("username", mUsername);
-                    startActivity(i);
+
+                    i.setType("String");
+                    resultLauncher.launch(i);
+                    //startActivity(i);
                 }
             });
             return;
