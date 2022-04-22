@@ -199,10 +199,16 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
         mApplyButton.setVisibility(View.VISIBLE);
         mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
         mErrorText.setVisibility(View.GONE);
+        Log.d("here", "go1");
+
         mApplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: Go to Application Activity
+                Intent i = new Intent(DetailAdActivity.this, MakeApplicationActivity.class);
+                i.putExtra("username", mUsername);
+                i.setType("String");
+                resultLauncher.launch(i);
             }
         });
     }

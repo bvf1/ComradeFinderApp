@@ -21,7 +21,7 @@ public class MakeApplicationActivity extends FragmentActivity implements Applica
     private Button mAppButton;
 
     private LinearLayout mMakeApplication;
-
+    private String mUsername = "";
 
     private EditText mName;
     private EditText mEmail;
@@ -37,6 +37,9 @@ public class MakeApplicationActivity extends FragmentActivity implements Applica
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_application);
         mMakeApplication = findViewById(R.id.MakeApplication);
+
+        Intent prevIntent = getIntent();
+        mUsername = prevIntent.getStringExtra("username");
 
         Log.d("here", "here");
 
@@ -61,6 +64,7 @@ public class MakeApplicationActivity extends FragmentActivity implements Applica
 
     @Override
     public void onBackPressed() {
+
         toggleAppFragment(false);
     }
 
@@ -143,7 +147,7 @@ public class MakeApplicationActivity extends FragmentActivity implements Applica
 
     // Puts LoginStatus fragment in login_fragment_container
     private void createLoginFragment() {
-        LoginStatusFragment login = new LoginStatusFragment().newInstance("missing");
+        LoginStatusFragment login = new LoginStatusFragment().newInstance(mUsername);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.login_fragment_container, login)
