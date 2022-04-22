@@ -114,9 +114,10 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
 
         if (mUsername == null || mUsername.equals("")) {
             updateNoUser();
-        }
-        if (mIsCompany) {
+        } else if (mIsCompany) {
             updateIsCompany();
+        } else {
+            updateIsUser();
         }
     }
 
