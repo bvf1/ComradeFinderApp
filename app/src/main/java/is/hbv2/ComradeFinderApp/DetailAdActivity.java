@@ -187,6 +187,7 @@ public class DetailAdActivity extends AppCompatActivity implements LoginStatusFr
         mApplyButton.setText(R.string.create_application_text);
         mApplyButton.setVisibility(View.VISIBLE);
         mErrorText = (TextView) findViewById(R.id.adsDetailUserError);
+        mErrorText.setText(R.string.applyError_notLoggedIn);
         mErrorText.setVisibility(View.VISIBLE);
     }
 
